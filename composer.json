@@ -1,0 +1,25 @@
+{
+    "name": "renanivo/authoritarian",
+    "description": "An OAuth 2 client for PHP with multiple authorization flows support",
+    "require": {
+        "guzzle/guzzle": "~3.5.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "2.0.*@dev"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Renan Ivo",
+            "email": "renanivom@gmail.com"
+        }
+    ]
+}
