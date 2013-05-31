@@ -50,7 +50,12 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
      */
     public function getRequest()
     {
-        return $this->client->get($this->tokenUrl);
+        return $this->client->get(
+            $this->tokenUrl,
+            array(
+                'Content-Type' => 'application/x-www-form-urlencoded'
+            )
+        );
     }
 }
 
