@@ -14,7 +14,7 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
     /**
      * Constructor
      *
-     * @param Guzzle\Http\ClientInterface $client   An implementation of the Guzzle Client
+     * @param Guzzle\Http\ClientInterface $client   An instance of Guzzle Client
      * @param $client_id    The app's client Id
      * @param $token_url    The OAuth server endpoint to obtain the access tokens
      * @param $client_secret    The app's client secret
@@ -33,11 +33,21 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
         $this->tokenUrl = $token_url;
     }
 
+    /**
+     * Set HTTP Client
+     *
+     * @param Guzzle\Http\ClientInterface $client An instance of Guzzle Client
+     */
     public function setClient(\Guzzle\Http\ClientInterface $client)
     {
         $this->client = $client;
     }
 
+    /**
+     * Get the authorization request
+     *
+     * @return Guzzle\Http\Message\Request
+     */
     public function getRequest()
     {
         return $this->client->get($this->tokenUrl);
