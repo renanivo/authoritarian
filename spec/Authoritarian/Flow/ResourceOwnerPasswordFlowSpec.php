@@ -64,5 +64,12 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
             ->__toString()
             ->shouldMatch('/grant_type=password/');
     }
+
+    public function it_should_create_a_request_with_the_given_scope_in_the_body()
+    {
+        $this->getRequest()
+            ->__toString()
+            ->shouldMatch('/scope=scope/');
+    }
 }
 

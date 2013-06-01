@@ -36,6 +36,7 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
         $this->tokenUrl = $token_url;
         $this->clientId = $client_id;
         $this->clientSecret = $client_secret;
+        $this->scope = $scope;
     }
 
     /**
@@ -62,6 +63,7 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
                 'client_id' => $this->clientId,
                 'client_secret' => $this->clientSecret,
                 'grant_type' => self::GRANT_TYPE,
+                'scope' => $this->scope,
             )
         );
     }
