@@ -10,6 +10,7 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
 {
     protected $client;
     protected $tokenUrl;
+    protected $clientId;
 
     /**
      * Constructor
@@ -31,6 +32,7 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
         $password
     ) {
         $this->tokenUrl = $token_url;
+        $this->clientId = $client_id;
     }
 
     /**
@@ -50,10 +52,11 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
      */
     public function getRequest()
     {
-        return $this->client->get(
+        return $this->client->post(
             $this->tokenUrl,
+            null,
             array(
-                'Content-Type' => 'application/x-www-form-urlencoded'
+                'client_id' => $this->clientId,
             )
         );
     }

@@ -40,8 +40,15 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
     {
         $this->getRequest()
             ->getHeader('Content-Type')
-            ->hasValue('application/x-www-form-urlencoded')
+            ->hasValue('application/x-www-form-urlencoded; charset=utf-8')
             ->shouldBe(true);
+    }
+
+    public function it_should_create_a_request_with_authorization_data_in_the_body()
+    {
+        $this->getRequest()
+            ->__toString()
+            ->shouldMatch('/client_id=client%20id/');
     }
 }
 
