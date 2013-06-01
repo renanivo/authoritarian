@@ -13,6 +13,10 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
     protected $client;
     protected $tokenUrl;
     protected $clientId;
+    protected $clientSecret;
+    protected $scope;
+    protected $username;
+    protected $password;
 
     /**
      * Constructor
@@ -37,6 +41,8 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
         $this->clientId = $client_id;
         $this->clientSecret = $client_secret;
         $this->scope = $scope;
+        $this->username = $username;
+        $this->password = $password;
     }
 
     /**
@@ -64,6 +70,8 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
                 'client_secret' => $this->clientSecret,
                 'grant_type' => self::GRANT_TYPE,
                 'scope' => $this->scope,
+                'username' => $this->username,
+                'password' => $this->password,
             )
         );
     }

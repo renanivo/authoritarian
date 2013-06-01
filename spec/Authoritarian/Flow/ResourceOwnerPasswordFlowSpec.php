@@ -71,5 +71,19 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
             ->__toString()
             ->shouldMatch('/scope=scope/');
     }
+
+    public function it_should_create_a_request_with_username_in_the_body()
+    {
+        $this->getRequest()
+            ->__toString()
+            ->shouldMatch('/username=username/');
+    }
+
+    public function it_should_create_a_request_with_password_in_the_body()
+    {
+        $this->getRequest()
+            ->__toString()
+            ->shouldMatch('/password=password/');
+    }
 }
 
