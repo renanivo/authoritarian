@@ -23,7 +23,7 @@ class AuthorizationSpec extends ObjectBehavior
      * @param Guzzle\Http\Message\Request $request
      * @param Guzzle\Http\Message\Response $response
      */
-    public function it_should_return_the_request_response($client, $flow, $request, $response)
+    public function it_should_get_the_response_of_the_flow_request($client, $flow, $request, $response)
     {
         $flow->setClient($client)->shouldBeCalled();
 
@@ -40,7 +40,7 @@ class AuthorizationSpec extends ObjectBehavior
      * @param Guzzle\Http\Message\Request $request
      * @param Guzzle\Http\Message\Response $response
      */
-    public function it_should_return_array_for_json_responses($client, $flow, $request, $response)
+    public function it_should_get_an_array_when_the_response_content_type_is_json($client, $flow, $request, $response)
     {
         $flow->setClient($client)->shouldBeCalled();
 
