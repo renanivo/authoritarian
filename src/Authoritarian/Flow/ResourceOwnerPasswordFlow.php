@@ -33,6 +33,7 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
     ) {
         $this->tokenUrl = $token_url;
         $this->clientId = $client_id;
+        $this->clientSecret = $client_secret;
     }
 
     /**
@@ -57,6 +58,7 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
             null,
             array(
                 'client_id' => $this->clientId,
+                'client_secret' => $this->clientSecret,
             )
         );
     }

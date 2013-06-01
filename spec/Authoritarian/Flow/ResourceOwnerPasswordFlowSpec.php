@@ -44,11 +44,18 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
             ->shouldBe(true);
     }
 
-    public function it_should_create_a_request_with_authorization_data_in_the_body()
+    public function it_should_create_a_request_with_client_id_in_the_body()
     {
         $this->getRequest()
             ->__toString()
             ->shouldMatch('/client_id=client%20id/');
+    }
+
+    public function it_should_create_a_request_with_client_secret_in_the_body()
+    {
+        $this->getRequest()
+            ->__toString()
+            ->shouldMatch('/client_secret=client%20secret/');
     }
 }
 
