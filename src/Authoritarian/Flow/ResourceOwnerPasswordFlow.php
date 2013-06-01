@@ -8,6 +8,8 @@ namespace Authoritarian\Flow;
  **/
 class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
 {
+    const GRANT_TYPE = 'password';
+
     protected $client;
     protected $tokenUrl;
     protected $clientId;
@@ -59,6 +61,7 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
             array(
                 'client_id' => $this->clientId,
                 'client_secret' => $this->clientSecret,
+                'grant_type' => self::GRANT_TYPE,
             )
         );
     }
