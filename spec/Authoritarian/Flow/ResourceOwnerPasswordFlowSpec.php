@@ -36,6 +36,13 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
         $this->getRequest()->getUrl()->shouldBeEqualTo($this->tokenUrl);
     }
 
+    public function it_should_create_a_request_with_method_post()
+    {
+        $this->getRequest()
+            ->getMethod()
+            ->shouldBe('POST');
+    }
+
     public function it_should_create_a_request_with_form_url_encode_header()
     {
         $this->getRequest()
