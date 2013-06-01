@@ -18,7 +18,18 @@ class Authorization implements AuthorizationInterface
     {
         $flow->setClient($this->client);
         $response = $flow->getRequest()->send();
-        return $response->getBody();
+
+        if ($this->hasJsonHeader($response)) {
+            return $response->json();
+        } else {
+            return $response->getBody();
+        }
+    }
+
+    protected function hasJsonHeader($response)
+    {
+        $content_type = (string)$response->getHeader('Content-Type');
+        return preg_match('/application\/json/', $content_type);
     }
 }
 
