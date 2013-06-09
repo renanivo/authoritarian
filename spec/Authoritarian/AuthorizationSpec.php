@@ -32,7 +32,7 @@ class AuthorizationSpec extends ObjectBehavior
         $request->send()->willReturn($response);
         $flow->getRequest()->willReturn($request);
 
-        $this->getAccessToken($flow)->shouldBeEqualTo('response');
+        $this->requestAccessToken($flow)->shouldBeEqualTo('response');
     }
 
     /**
@@ -57,7 +57,7 @@ class AuthorizationSpec extends ObjectBehavior
         $request->send()->willReturn($response);
         $flow->getRequest()->willReturn($request);
 
-        $this->getAccessToken($flow)
+        $this->requestAccessToken($flow)
             ->shouldBeEqualTo($access_token);
     }
 }

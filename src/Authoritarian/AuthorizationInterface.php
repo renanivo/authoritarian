@@ -16,5 +16,5 @@ interface AuthorizationInterface
      *
      * @return array
      */
-    public function getAccessToken(Flow\AuthorizationFlowInterface $flow);
+    public function requestAccessToken(Flow\AuthorizationFlowInterface $flow);
 }

@@ -14,7 +14,7 @@ class Authorization implements AuthorizationInterface
         $this->client = $client;
     }
 
-    public function getAccessToken(Flow\AuthorizationFlowInterface $flow)
+    public function requestAccessToken(Flow\AuthorizationFlowInterface $flow)
     {
         $flow->setClient($this->client);
         $response = $flow->getRequest()->send();
