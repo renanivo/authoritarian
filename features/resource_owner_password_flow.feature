@@ -6,4 +6,4 @@ Feature: Resource Owner Password Flow
     Scenario: Get the access token of a user
         Given I use the resource owner password flow
         When I request the Access Token
-        Then I should get an array
+        Then I should get an array with the access token

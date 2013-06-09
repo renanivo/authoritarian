@@ -56,7 +56,7 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Then /^I should get an array$/
+     * @Then /^I should get an array with the access token$/
      */
     public function iShouldGetAnArray()
     {
