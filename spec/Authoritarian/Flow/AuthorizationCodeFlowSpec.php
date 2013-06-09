@@ -56,21 +56,20 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
     public function it_should_get_a_valid_authorize_url()
     {
         $this->getAuthorizeUrl('http://example.com/callback')
-            ->shouldBeAValidUrl();
+            ->shouldBeAValidUrl(
+                FILTER_FLAG_PATH_REQUIRED | FILTER_FLAG_QUERY_REQUIRED
+            );
     }
 
     public function getMatchers()
     {
         return array(
-            'beAValidUrl' => function($subject) {
+            'beAValidUrl' => function($subject, $flags) {
                 return false !== filter_var(
                     $subject,
                     FILTER_VALIDATE_URL,
                     array(
-                        'flags' => array(
-                            FILTER_FLAG_PATH_REQUIRED,
-                            FILTER_FLAG_QUERY_REQUIRED,
-                        ),
+                        'flags' => $flags,
                     )
                 );
             }
