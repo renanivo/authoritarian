@@ -4,7 +4,7 @@ namespace Authoritarian\Flow;
 
 /**
  * Implementation of the Authorization Flow Interface to
- * the Resource Owner Password Flow
+ * the Resource Owner Password Flow of OAuth 2
  **/
 class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
 {
@@ -21,13 +21,12 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
     /**
      * Constructor
      *
-     * @param Guzzle\Http\ClientInterface $client   An instance of Guzzle Client
-     * @param $client_id    The app's client Id
-     * @param $token_url    The OAuth server endpoint to obtain the access tokens
-     * @param $client_secret    The app's client secret
-     * @param $scope    The data your application is requesting access to
-     * @param $username The user's username to login
-     * @param $password The user's password
+     * @param string $token_url    The OAuth server endpoint to obtain the access tokens
+     * @param string $client_id    The app's client Id
+     * @param string $client_secret    The app's client secret
+     * @param string $scope    The data your application is requesting access to
+     * @param string $username The user's username to login
+     * @param string $password The user's password
      */
     public function __construct(
         $token_url,
