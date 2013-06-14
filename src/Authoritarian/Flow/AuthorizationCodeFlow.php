@@ -2,17 +2,24 @@
 
 namespace Authoritarian\Flow;
 
+use Authoritarian\Exception\FlowException;
+
 /**
  * Implementation of the Authorization Flow Interface to
  * the Authorization Code Flow of Oauth 2
  **/
 class AuthorizationCodeFlow implements AuthorizationFlowInterface
 {
+    const GRANT_TYPE = 'authorization_code';
+
     protected $tokenUrl;
     protected $clientId;
     protected $clientSecret;
     protected $scope;
     protected $authorizeUrl;
+    protected $code;
+    protected $redirectUri;
+    protected $state;
 
     /**
      * Constructor
@@ -48,31 +55,78 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
     }
 
     /**
+     * Set the Authorization Code
+     *
+     * @param string $code The Authorization Code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * Set the URI the user will be redirected after
+     * authentication and authorization
+     *
+     * @param string $url the callback URI
+     */
+    public function setRedirectUri($url)
+    {
+        $this->redirectUri = $url;
+    }
+
+    /**
+     * Set a CSRF token to validate the response code
+     *
+     * @param string $state the CSRF token
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
+    /**
      * Get the authorization request
      *
      * @return Guzzle\Http\Message\Request
      */
     public function getRequest()
     {
-        return $this->client->get();
+        if (is_null($this->code)) {
+            throw new FlowException(
+                'No code set. Impossible to create an '
+                . 'Authorization Code Flow Request'
+            );
+        }
+
+        return $this->client->post(
+            $this->authorizeUrl,
+            null,
+            array(
+                'code' => $this->code,
+                'client_id' => $this->clientId,
+                'client_secret' => $this->clientSecret,
+                'redirect_uri' => $this->redirectUri,
+                'scope' => $this->scope,
+                'grant_type' => self::GRANT_TYPE,
+            )
+        );
     }
 
     /**
      * Get the URL to user's authorization
      *
-     * @param string $callback_url The URL that will handle the authorization code after the user's login
-     * @param string $state A CSRF token
      * @return string The URL to user's authorization
      */
-    public function getAuthorizeUrl($callback_url, $state = null)
+    public function getAuthorizeUrl()
     {
         $query_parameters = array(
-            'redirect_uri' => $callback_url,
+            'redirect_uri' => $this->redirectUri,
             'client_id' => $this->clientId,
         );
 
-        if (!is_null($state)) {
-            $query_parameters['state'] = $state;
+        if (!is_null($this->state)) {
+            $query_parameters['state'] = $this->state;
         }
 
         return $this->authorizeUrl . '?' . http_build_query($query_parameters);
