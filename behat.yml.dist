@@ -1,10 +1,9 @@
 default:
     context:
         parameters:
-            resource_owner:
-                token_url: "http://api.example.com/oauth/token"
-                client_id: app-client-id
-                client_secret: secret
-                username: username
-                password: password
-                scope: scope
+            token_url: http://api.example.com/oauth/token
+            client_id: app-client-id
+            client_secret: secret
+            username: username
+            password: password
+            scope: scope

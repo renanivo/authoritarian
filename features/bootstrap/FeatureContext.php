@@ -34,19 +34,18 @@ class FeatureContext extends BehatContext
      */
     public function iUseTheResourceOwnerPasswordFlow()
     {
-        $credentials = $this->parameters['resource_owner'];
         $this->flow = new ResourceOwnerPasswordFlow(
-            $credentials['token_url'],
-            $credentials['client_id'],
-            $credentials['client_secret'],
-            $credentials['scope'],
-            $credentials['username'],
-            $credentials['password']
+            $this->parameters['token_url'],
+            $this->parameters['client_id'],
+            $this->parameters['client_secret'],
+            $this->parameters['scope'],
+            $this->parameters['username'],
+            $this->parameters['password']
         );
     }
 
     /**
-     * @When /^I request the Access Token$/
+     * @When /^I request the access token$/
      */
     public function iRequestTheAccessToken()
     {
