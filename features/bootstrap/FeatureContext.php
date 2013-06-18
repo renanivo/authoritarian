@@ -8,6 +8,7 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 
 use Authoritarian\Flow\ResourceOwnerPasswordFlow;
+use Authoritarian\Flow\AuthorizationCodeFlow;
 
 /**
  * Features context.
@@ -64,6 +65,49 @@ class FeatureContext extends BehatContext
         ) {
             throw new Exception('Access token should be an array');
         }
+    }
+
+    /**
+     * @Given /^I use the authorization code flow$/
+     */
+    public function iUseTheAuthorizationCodeFlow()
+    {
+        $this->flow = new AuthorizationCodeFlow(
+            $this->parameters['token_url'],
+            $this->parameters['client_id'],
+            $this->parameters['client_secret'],
+            $this->parameters['scope'],
+            $this->parameters['authorize_url']
+        );
+    }
+
+    /**
+     * @Given /^I authorize the app at the web ui$/
+     */
+    public function iAuthorizeTheAppAtTheWebUi()
+    {
+        $host = '127.0.0.1';
+        $port = 8124;
+        $node_bin = '/usr/local/bin/node';
+        $script = null;
+
+        $driver = new \Behat\Mink\Driver\ZombieDriver(
+            new \Behat\Mink\Driver\NodeJS\Server\ZombieServer($host, $port, $node_bin, $script)
+        );
+        $session = new \Behat\Mink\Session($driver);
+        $session->start();
+
+        $session->visit($this->flow->getAuthorizeUrl('callback://'));
+
+        $page = $session->getPage();
+    }
+
+    /**
+     * @When /^I request the acess token$/
+     */
+    public function iRequestTheAcessToken()
+    {
+        throw new PendingException();
     }
 }
 
