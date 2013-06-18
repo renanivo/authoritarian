@@ -1,0 +1,10 @@
+{
+  "name": "authoritarian",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/renanivo/authoritarian.git"
+  },
+  "dependencies": {
+    "zombie": "~1.4.1"
+  }
+}
