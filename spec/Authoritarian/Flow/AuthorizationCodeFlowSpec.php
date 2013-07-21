@@ -50,6 +50,20 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
             ->shouldMatch('/client_id=client\+id/');
     }
 
+    public function it_should_get_the_authorize_url_with_the_correct_response_type()
+    {
+        $this->setRedirectUri('http://example.com/callback');
+        $this->getAuthorizeUrl()
+            ->shouldMatch('/response_type=code/');
+    }
+
+    public function it_should_get_the_authorize_url_with_the_given_scope()
+    {
+        $this->setRedirectUri('http://example.com/callback');
+        $this->getAuthorizeUrl()
+            ->shouldMatch('/scope=scope/');
+    }
+
     public function it_should_get_the_authorize_url_with_state_when_given()
     {
         $this->setRedirectUri('http://example.com/callback');
