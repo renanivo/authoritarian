@@ -8,7 +8,7 @@
         "phpspec/phpspec": "2.0.*@dev",
         "behat/behat": "2.4.*@stable",
         "behat/mink-extension": "*",
-        "behat/mink-zombie-driver": "*"
+        "behat/mink-selenium2-driver": "*"
     },
     "config": {
         "bin-dir": "bin"
