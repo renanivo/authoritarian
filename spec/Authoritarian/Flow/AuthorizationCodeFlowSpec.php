@@ -10,12 +10,15 @@ use Authoritarian\Exception\FlowException;
 class AuthorizationCodeFlowSpec extends ObjectBehavior
 {
     private $authorizeUrl;
+    private $tokenUrl;
 
     public function let()
     {
         $this->authorizeUrl = 'http://api.example.com/oauth/authorize';
+        $this->tokenUrl = 'http://api.example.com/oauth/token';
+
         $this->beConstructedWith(
-            'http://api.example.com/oauth/token',
+            $this->tokenUrl,
             'client id',
             'client secret',
             'scope',
@@ -29,9 +32,8 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
         $this->shouldHaveType('Authoritarian\Flow\AuthorizationCodeFlow');
     }
 
-    public function it_should_get_the_authorize_with_the_given_url()
+    public function it_should_get_the_authorize_url()
     {
-        $this->setRedirectUri('http://example.com/callback');
         $this->getAuthorizeUrl()
             ->shouldStartWith($this->authorizeUrl);
     }
@@ -94,6 +96,12 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
     {
         $this->setCode('code');
         $this->getRequest()->getMethod()->shouldBe('POST');
+    }
+
+    public function it_should_get_a_request_to_the_token_url()
+    {
+        $this->setCode('code');
+        $this->getRequest()->getUrl()->shouldBeEqualTo($this->tokenUrl);
     }
 
     public function it_should_get_a_request_with_code()
