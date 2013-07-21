@@ -8,3 +8,14 @@ default:
             username: username
             password: password
             scope: scope
+            redirect_url: "http://www.apontador.com.br"
+
+            # web ui elements for Authorization-Code Flow
+            username_field: username
+            password_field: password
+            submit_button: submit
+            authorize_button: authorize
+
+            # selenium webdriver configuration
+            browser: "firefox"
+            selenium_webdriver_host: "http://localhost:4444/wd/hub"

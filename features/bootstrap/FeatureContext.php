@@ -7,6 +7,8 @@ use Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 
+use Behat\Mink\Driver\Selenium2Driver;
+
 use Authoritarian\Flow\ResourceOwnerPasswordFlow;
 use Authoritarian\Flow\AuthorizationCodeFlow;
 
@@ -28,6 +30,7 @@ class FeatureContext extends BehatContext
     public function __construct(array $parameters)
     {
         $this->parameters = $parameters;
+        putenv('NODE_PATH=' . dirname(dirname(__DIR__)) . '/node_modules/');
     }
 
     /**
@@ -86,28 +89,62 @@ class FeatureContext extends BehatContext
      */
     public function iAuthorizeTheAppAtTheWebUi()
     {
-        $host = '127.0.0.1';
-        $port = 8124;
-        $node_bin = '/usr/local/bin/node';
-        $script = null;
+        $session = $this->startWebdriverSession();
 
-        $driver = new \Behat\Mink\Driver\ZombieDriver(
-            new \Behat\Mink\Driver\NodeJS\Server\ZombieServer($host, $port, $node_bin, $script)
-        );
-        $session = new \Behat\Mink\Session($driver);
-        $session->start();
+        $this->flow->setRedirectUri($this->parameters['redirect_url']);
 
-        $session->visit($this->flow->getAuthorizeUrl('callback://'));
+        $session->visit($this->flow->getAuthorizeUrl());
+        $this->fillLoginFormAndSubmit($session->getPage());
 
-        $page = $session->getPage();
+        if ($this->wasAuthorizationButtonPrompted($session->getCurrentUrl())) {
+            $session->getPage()
+                ->pressButton($this->parameters['authorize_button']);
+        }
+
+        $code = $this->getAuthorizationCode($session->getCurrentUrl());
+        $this->flow->setCode($code);
     }
 
-    /**
-     * @When /^I request the acess token$/
-     */
-    public function iRequestTheAcessToken()
+    private function startWebdriverSession()
     {
-        throw new PendingException();
+        $driver = new Selenium2Driver(
+            $this->parameters['browser'],
+            null,
+            $this->parameters['selenium_webdriver_host']
+        );
+
+        $session = new Behat\Mink\Session($driver);
+        $session->start();
+
+        return $session;
+    }
+
+    private function fillLoginFormAndSubmit($page)
+    {
+        $page->fillField(
+            $this->parameters['username_field'],
+            $this->parameters['username']
+        );
+        $page->fillField(
+            $this->parameters['password_field'],
+            $this->parameters['password']
+        );
+        $page->pressButton(
+            $this->parameters['submit_button']
+        );
+    }
+
+    private function wasAuthorizationButtonPrompted($currentUrl)
+    {
+        return $currentUrl == $this->flow->getAuthorizeUrl();
+    }
+
+    private function getAuthorizationCode($currentUrl)
+    {
+        $querystring = explode('?', $currentUrl)[1];
+        $parameters = array();
+        parse_str($querystring, $parameters);
+        return $parameters['code'];
     }
 }
 
