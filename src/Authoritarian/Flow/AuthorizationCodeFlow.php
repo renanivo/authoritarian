@@ -16,26 +16,19 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
 
     protected $tokenUrl;
     protected $clientCredential;
-    protected $scope;
     protected $authorizeUrl;
     protected $code;
     protected $redirectUri;
     protected $state;
 
     /**
-     * Constructor
-     *
      * @param string $token_url The OAuth Token endpoint url
      * @param string $scope The data your application is requesting access to
      * @param string $authorize_url The OAuth Authorize endpoint url
      */
-    public function __construct(
-        $token_url,
-        $scope,
-        $authorize_url
-    ) {
+    public function __construct($token_url, $authorize_url)
+    {
         $this->tokenUrl = $token_url;
-        $this->scope = $scope;
         $this->authorizeUrl = $authorize_url;
     }
 
@@ -54,6 +47,14 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
     public function setClientCredential(ClientCredential $credential)
     {
         $this->clientCredential = $credential;
+    }
+
+    /**
+     * @param string The scope the app is requiring access
+     */
+    public function setScope($scope)
+    {
+        $this->scope = $scope;
     }
 
     /**

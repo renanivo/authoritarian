@@ -15,26 +15,17 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
     protected $client;
     protected $tokenUrl;
     protected $clientCredential;
-    protected $scope;
     protected $username;
     protected $password;
 
     /**
-     * Constructor
-     *
-     * @param string $token_url    The OAuth server endpoint to obtain the access tokens
-     * @param string $scope    The data your application is requesting access to
+     * @param string $token_url The OAuth server endpoint to obtain the access tokens
      * @param string $username The user's username to login
      * @param string $password The user's password
      */
-    public function __construct(
-        $token_url,
-        $scope,
-        $username,
-        $password
-    ) {
+    public function __construct($token_url, $username, $password)
+    {
         $this->tokenUrl = $token_url;
-        $this->scope = $scope;
         $this->username = $username;
         $this->password = $password;
     }
@@ -54,6 +45,14 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
     public function setClientCredential(ClientCredential $credential)
     {
         $this->clientCredential = $credential;
+    }
+
+    /**
+     * @param string The scope the app is requiring access
+     */
+    public function setScope($scope)
+    {
+        $this->scope = $scope;
     }
 
     /**

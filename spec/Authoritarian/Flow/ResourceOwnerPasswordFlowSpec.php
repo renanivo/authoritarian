@@ -16,7 +16,6 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
         $this->tokenUrl = 'http://api.example.com/oauth/token';
         $this->beConstructedWith(
             $this->tokenUrl,
-            'scope',
             'username',
             'password'
         );
@@ -26,6 +25,7 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
         $this->setClientCredential(
             new ClientCredential('client id', 'client secret')
         );
+        $this->setScope('scope');
     }
 
     public function it_should_be_initializable()

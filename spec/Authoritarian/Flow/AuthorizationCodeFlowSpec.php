@@ -20,13 +20,13 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
         $this->beConstructedWith(
             $this->tokenUrl,
-            'scope',
             $this->authorizeUrl
         );
         $this->setHttpClient(new \Guzzle\Http\Client());
         $this->setClientCredential(
             new ClientCredential('client id', 'client secret')
         );
+        $this->setScope('scope');
     }
 
     public function it_should_be_initializable()
