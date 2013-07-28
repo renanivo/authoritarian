@@ -2,17 +2,22 @@
 
 namespace Authoritarian\Flow;
 
+use Authoritarian\Credential\ClientCredential;
+
 /**
  *  Authorization Flow interface to generate Access Token Requests
  */
 interface AuthorizationFlowInterface
 {
     /**
-     * Set the Http Client
-     *
-     * @param \Guzzle\Http\Client $client   HTTP Client
+     * @param \Guzzle\Http\ClientInterface $client The HTTP Client
      */
     public function setHttpClient(\Guzzle\Http\ClientInterface $client);
+
+    /**
+     * @param Authoritarian\Credential\ClientCredential $credential The App's Client Credentials
+     */
+    public function setClientCredential(ClientCredential $credential);
 
     /**
      * Get the request to the Access Token
@@ -21,3 +26,4 @@ interface AuthorizationFlowInterface
      */
     public function getRequest();
 }
+

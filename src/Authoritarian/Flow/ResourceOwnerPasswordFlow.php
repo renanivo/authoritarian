@@ -2,6 +2,8 @@
 
 namespace Authoritarian\Flow;
 
+use Authoritarian\Credential\ClientCredential;
+
 /**
  * Implementation of the Authorization Flow Interface to
  * the Resource Owner Password Flow of OAuth 2
@@ -12,8 +14,7 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
 
     protected $client;
     protected $tokenUrl;
-    protected $clientId;
-    protected $clientSecret;
+    protected $clientCredential;
     protected $scope;
     protected $username;
     protected $password;
@@ -22,36 +23,37 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
      * Constructor
      *
      * @param string $token_url    The OAuth server endpoint to obtain the access tokens
-     * @param string $client_id    The app's client Id
-     * @param string $client_secret    The app's client secret
      * @param string $scope    The data your application is requesting access to
      * @param string $username The user's username to login
      * @param string $password The user's password
      */
     public function __construct(
         $token_url,
-        $client_id,
-        $client_secret,
         $scope,
         $username,
         $password
     ) {
         $this->tokenUrl = $token_url;
-        $this->clientId = $client_id;
-        $this->clientSecret = $client_secret;
         $this->scope = $scope;
         $this->username = $username;
         $this->password = $password;
     }
 
     /**
-     * Set the HTTP Client
-     *
-     * @param Guzzle\Http\ClientInterface $client An instance of Guzzle Client
+     * @param Guzzle\Http\ClientInterface $client The HTTP Client
      */
     public function setHttpClient(\Guzzle\Http\ClientInterface $client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * @param Authoritarian\Credential\ClientCredential $credential The App's
+     * Client Credential
+     */
+    public function setClientCredential(ClientCredential $credential)
+    {
+        $this->clientCredential = $credential;
     }
 
     /**
@@ -65,8 +67,8 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
             $this->tokenUrl,
             null,
             array(
-                'client_id' => $this->clientId,
-                'client_secret' => $this->clientSecret,
+                'client_id' => $this->clientCredential->getId(),
+                'client_secret' => $this->clientCredential->getSecret(),
                 'grant_type' => self::GRANT_TYPE,
                 'scope' => $this->scope,
                 'username' => $this->username,

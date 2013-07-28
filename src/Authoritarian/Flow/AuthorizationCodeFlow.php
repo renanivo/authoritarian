@@ -3,6 +3,7 @@
 namespace Authoritarian\Flow;
 
 use Authoritarian\Exception\FlowException;
+use Authoritarian\Credential\ClientCredential;
 
 /**
  * Implementation of the Authorization Flow Interface to
@@ -14,8 +15,7 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
     const RESPONSE_TYPE = 'code';
 
     protected $tokenUrl;
-    protected $clientId;
-    protected $clientSecret;
+    protected $clientCredential;
     protected $scope;
     protected $authorizeUrl;
     protected $code;
@@ -26,29 +26,21 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
      * Constructor
      *
      * @param string $token_url The OAuth Token endpoint url
-     * @param string $client_id The app's client id
-     * @param string $client_secret The app's client secret
      * @param string $scope The data your application is requesting access to
      * @param string $authorize_url The OAuth Authorize endpoint url
      */
     public function __construct(
         $token_url,
-        $client_id,
-        $client_secret,
         $scope,
         $authorize_url
     ) {
         $this->tokenUrl = $token_url;
-        $this->clientId = $client_id;
-        $this->clientSecret = $client_secret;
         $this->scope = $scope;
         $this->authorizeUrl = $authorize_url;
     }
 
     /**
-     * Set the HTTP Client
-     *
-     * @param Guzzle\Http\ClientInterface $client An instance of Guzzle Client
+     * @param Guzzle\Http\ClientInterface $client The HTTP Client
      */
     public function setHttpClient(\Guzzle\Http\ClientInterface $client)
     {
@@ -56,7 +48,16 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
     }
 
     /**
-     * Set the Authorization Code
+     * @param Authoritarian\Credential\ClientCredential $credential The App's
+     * Client Credential
+     */
+    public function setClientCredential(ClientCredential $credential)
+    {
+        $this->clientCredential = $credential;
+    }
+
+    /**
+     * Set the Code retrived from the querystring after the user's authorization
      *
      * @param string $code The Authorization Code
      */
@@ -66,8 +67,7 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
     }
 
     /**
-     * Set the URI the user will be redirected after
-     * authentication and authorization
+     * Set the URI that will be used to retrieve the authorization code
      *
      * @param string $url the callback URI
      */
@@ -105,8 +105,8 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
             null,
             array(
                 'code' => $this->code,
-                'client_id' => $this->clientId,
-                'client_secret' => $this->clientSecret,
+                'client_id' => $this->clientCredential->getId(),
+                'client_secret' => $this->clientCredential->getSecret(),
                 'grant_type' => self::GRANT_TYPE,
                 'redirect_uri' => $this->redirectUri,
                 'scope' => $this->scope,
@@ -123,7 +123,7 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
     {
         $query_parameters = array(
             'redirect_uri' => $this->redirectUri,
-            'client_id' => $this->clientId,
+            'client_id' => $this->clientCredential->getId(),
             'response_type' => self::RESPONSE_TYPE,
             'scope' => $this->scope,
         );

@@ -6,6 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 use Authoritarian\Exception\FlowException;
+use Authoritarian\Credential\ClientCredential;
 
 class AuthorizationCodeFlowSpec extends ObjectBehavior
 {
@@ -19,12 +20,13 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
         $this->beConstructedWith(
             $this->tokenUrl,
-            'client id',
-            'client secret',
             'scope',
             $this->authorizeUrl
         );
         $this->setHttpClient(new \Guzzle\Http\Client());
+        $this->setClientCredential(
+            new ClientCredential('client id', 'client secret')
+        );
     }
 
     public function it_should_be_initializable()

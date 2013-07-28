@@ -6,6 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 use Authoritarian\Flow\ResourceOwnerPasswordFlow;
+use Authoritarian\Credential\ClientCredential;
 
 class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
 {
@@ -15,8 +16,6 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
         $this->tokenUrl = 'http://api.example.com/oauth/token';
         $this->beConstructedWith(
             $this->tokenUrl,
-            'client id',
-            'client secret',
             'scope',
             'username',
             'password'
@@ -24,6 +23,9 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
 
         $client = new \Guzzle\Http\Client();
         $this->setHttpClient($client);
+        $this->setClientCredential(
+            new ClientCredential('client id', 'client secret')
+        );
     }
 
     public function it_should_be_initializable()
