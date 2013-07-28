@@ -12,7 +12,7 @@ interface AuthorizationFlowInterface
      *
      * @param \Guzzle\Http\Client $client   HTTP Client
      */
-    public function setClient(\Guzzle\Http\ClientInterface $client);
+    public function setHttpClient(\Guzzle\Http\ClientInterface $client);
 
     /**
      * Get the request to the Access Token

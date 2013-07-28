@@ -45,11 +45,11 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
     }
 
     /**
-     * Set HTTP Client
+     * Set the HTTP Client
      *
      * @param Guzzle\Http\ClientInterface $client An instance of Guzzle Client
      */
-    public function setClient(\Guzzle\Http\ClientInterface $client)
+    public function setHttpClient(\Guzzle\Http\ClientInterface $client)
     {
         $this->client = $client;
     }

@@ -23,7 +23,7 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
         );
 
         $client = new \Guzzle\Http\Client();
-        $this->setClient($client);
+        $this->setHttpClient($client);
     }
 
     public function it_should_be_initializable()

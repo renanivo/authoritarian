@@ -25,7 +25,7 @@ class AuthorizationSpec extends ObjectBehavior
      */
     public function it_should_get_the_response_of_the_flow_request($client, $flow, $request, $response)
     {
-        $flow->setClient($client)->shouldBeCalled();
+        $flow->setHttpClient($client)->shouldBeCalled();
 
         $response->getBody()->willReturn('response');
         $response->getHeader('Content-Type')->willReturn(null);
@@ -42,7 +42,7 @@ class AuthorizationSpec extends ObjectBehavior
      */
     public function it_should_get_an_array_when_the_response_content_type_is_json($client, $flow, $request, $response)
     {
-        $flow->setClient($client)->shouldBeCalled();
+        $flow->setHttpClient($client)->shouldBeCalled();
 
         $access_token = array(
             'access_token' => 'access-token-value'
@@ -61,3 +61,4 @@ class AuthorizationSpec extends ObjectBehavior
             ->shouldBeEqualTo($access_token);
     }
 }
+

@@ -24,7 +24,7 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
             'scope',
             $this->authorizeUrl
         );
-        $this->setClient(new \Guzzle\Http\Client());
+        $this->setHttpClient(new \Guzzle\Http\Client());
     }
 
     public function it_should_be_initializable()
