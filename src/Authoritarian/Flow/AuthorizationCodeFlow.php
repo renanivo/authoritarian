@@ -23,7 +23,6 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
 
     /**
      * @param string $token_url The OAuth Token endpoint url
-     * @param string $scope The data your application is requesting access to
      * @param string $authorize_url The OAuth Authorize endpoint url
      */
     public function __construct($token_url, $authorize_url)
