@@ -8,7 +8,8 @@
         "phpspec/phpspec": "2.0.*@dev",
         "behat/behat": "2.4.*@stable",
         "behat/mink-extension": "*",
-        "behat/mink-selenium2-driver": "*"
+        "behat/mink-selenium2-driver": "*",
+        "henrikbjorn/phpspec-code-coverage": "dev-master"
     },
     "config": {
         "bin-dir": "bin"
