@@ -10,22 +10,31 @@ use Authoritarian\Credential\ClientCredential;
 
 class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
 {
-    protected $tokenUrl;
+    private $tokenUrl;
+    private $username;
+    private $password;
+    private $clientId;
+    private $clientSecret;
+
     public function let()
     {
         $this->tokenUrl = 'http://api.example.com/oauth/token';
+        $this->username = 'username';
+        $this->password = 'password';
+        $this->clientId = 'client id';
+        $this->clientSecret = 'client secret';
+
         $this->beConstructedWith(
             $this->tokenUrl,
-            'username',
-            'password'
+            $this->username,
+            $this->password
         );
 
         $client = new \Guzzle\Http\Client();
         $this->setHttpClient($client);
         $this->setClientCredential(
-            new ClientCredential('client id', 'client secret')
+            new ClientCredential($this->clientId, $this->clientSecret)
         );
-        $this->setScope('scope');
     }
 
     public function it_should_be_initializable()
@@ -56,43 +65,56 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
     public function it_should_create_a_request_with_client_id_in_the_body()
     {
         $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/client_id=client%20id/');
+            ->shouldHavePostParameter('client_id', $this->clientId);
     }
 
     public function it_should_create_a_request_with_client_secret_in_the_body()
     {
         $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/client_secret=client%20secret/');
+            ->shouldHavePostParameter('client_secret', $this->clientSecret);
     }
 
     public function it_should_create_a_request_with_grant_type_password_in_the_body()
     {
         $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/grant_type=password/');
+            ->shouldHavePostParameter(
+                'grant_type',
+                ResourceOwnerPasswordFlow::GRANT_TYPE
+            );
     }
 
     public function it_should_create_a_request_with_the_given_scope_in_the_body()
     {
+        $scope = 'scope';
+        $this->setScope($scope);
         $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/scope=scope/');
+            ->shouldHavePostParameter('scope', $scope);
     }
 
     public function it_should_create_a_request_with_username_in_the_body()
     {
         $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/username=username/');
+            ->shouldHavePostParameter('username', $this->username);
     }
 
     public function it_should_create_a_request_with_password_in_the_body()
     {
         $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/password=password/');
+            ->shouldHavePostParameter('password', $this->password);
+    }
+
+    public function getMatchers()
+    {
+        return array(
+            'havePostParameter' => function ($subject, $key, $value) {
+                $body = preg_split('/\n\s*\n/', $subject)[1];
+                $parameters = array();
+                parse_str($body, $parameters);
+
+                return array_key_exists($key, $parameters) &&
+                    $parameters[$key] == $value;
+            }
+        );
     }
 }
 

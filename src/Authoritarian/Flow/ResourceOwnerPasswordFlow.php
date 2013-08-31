@@ -15,8 +15,7 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
     protected $client;
     protected $tokenUrl;
     protected $clientCredential;
-    protected $username;
-    protected $password;
+    protected $parameters = array();
 
     /**
      * @param string $token_url The OAuth server endpoint to obtain the access tokens
@@ -26,8 +25,9 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
     public function __construct($token_url, $username, $password)
     {
         $this->tokenUrl = $token_url;
-        $this->username = $username;
-        $this->password = $password;
+        $this->setParameter('username', $username);
+        $this->setParameter('password', $password);
+        $this->setParameter('grant_type', self::GRANT_TYPE);
     }
 
     /**
@@ -44,7 +44,8 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
      */
     public function setClientCredential(ClientCredential $credential)
     {
-        $this->clientCredential = $credential;
+        $this->setParameter('client_id', $credential->getId());
+        $this->setParameter('client_secret', $credential->getSecret());
     }
 
     /**
@@ -52,7 +53,7 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
      */
     public function setScope($scope)
     {
-        $this->scope = $scope;
+        $this->setParameter('scope', $scope);
     }
 
     /**
@@ -64,15 +65,20 @@ class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
     {
         return $this->client->post(
             $this->tokenUrl,
-            null,
-            array(
-                'client_id' => $this->clientCredential->getId(),
-                'client_secret' => $this->clientCredential->getSecret(),
-                'grant_type' => self::GRANT_TYPE,
-                'scope' => $this->scope,
-                'username' => $this->username,
-                'password' => $this->password,
-            )
+            $this->getContentTypeFormUrlencodedHeader(),
+            $this->parameters
+        );
+    }
+
+    private function setParameter($key, $value)
+    {
+        $this->parameters[$key] = $value;
+    }
+
+    private function getContentTypeFormUrlencodedHeader()
+    {
+        return array(
+            'Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8',
         );
     }
 }
