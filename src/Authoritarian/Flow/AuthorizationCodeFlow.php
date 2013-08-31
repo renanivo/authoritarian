@@ -2,7 +2,7 @@
 
 namespace Authoritarian\Flow;
 
-use Authoritarian\Exception\FlowException;
+use Authoritarian\Exception\Flow\MissingAuthorizationCodeException;
 use Authoritarian\Credential\ClientCredential;
 
 /**
@@ -20,6 +20,7 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
     protected $code;
     protected $redirectUri;
     protected $state;
+    protected $parameters;
 
     /**
      * @param string $token_url The OAuth Token endpoint url
@@ -94,23 +95,15 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
     public function getRequest()
     {
         if (is_null($this->code)) {
-            throw new FlowException(
-                'No code set. Impossible to create an '
-                . 'Authorization Code Flow Request'
+            throw new MissingAuthorizationCodeException(
+                'No authorization code given to generate a request'
             );
         }
 
         return $this->client->post(
             $this->tokenUrl,
             null,
-            array(
-                'code' => $this->code,
-                'client_id' => $this->clientCredential->getId(),
-                'client_secret' => $this->clientCredential->getSecret(),
-                'grant_type' => self::GRANT_TYPE,
-                'redirect_uri' => $this->redirectUri,
-                'scope' => $this->scope,
-            )
+            $this->getRequestPostParameters()
         );
     }
 
@@ -121,18 +114,46 @@ class AuthorizationCodeFlow implements AuthorizationFlowInterface
      */
     public function getAuthorizeUrl()
     {
-        $query_parameters = array(
+        return $this->authorizeUrl . '?' . $this->getAuthorizeQueryParameters();
+    }
+
+    private function getRequestPostParameters()
+    {
+        $parameters = array(
+            'code' => $this->code,
+            'client_id' => $this->clientCredential->getId(),
+            'client_secret' => $this->clientCredential->getSecret(),
+            'grant_type' => self::GRANT_TYPE,
+            'redirect_uri' => $this->redirectUri,
+            'scope' => $this->scope,
+        );
+
+        return $this->removeNullItems($parameters);
+    }
+
+    private function getAuthorizeQueryParameters()
+    {
+        $parameters = array(
             'redirect_uri' => $this->redirectUri,
             'client_id' => $this->clientCredential->getId(),
             'response_type' => self::RESPONSE_TYPE,
             'scope' => $this->scope,
+            'state' => $this->state,
         );
 
-        if (!is_null($this->state)) {
-            $query_parameters['state'] = $this->state;
-        }
+        return http_build_query(
+            $this->removeNullItems($parameters)
+        );
+    }
 
-        return $this->authorizeUrl . '?' . http_build_query($query_parameters);
+    private function removeNullItems(array $parameters)
+    {
+        return array_filter(
+            $parameters,
+            function ($item) {
+                return !is_null($item);
+            }
+        );
     }
 }
 

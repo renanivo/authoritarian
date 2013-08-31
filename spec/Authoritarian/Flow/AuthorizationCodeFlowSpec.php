@@ -5,7 +5,6 @@ namespace spec\Authoritarian\Flow;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-use Authoritarian\Exception\FlowException;
 use Authoritarian\Credential\ClientCredential;
 use Authoritarian\Flow\AuthorizationCodeFlow;
 
@@ -104,10 +103,7 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
     public function it_should_throw_an_exception_to_get_a_request_without_code()
     {
         $this->shouldThrow(
-            new FlowException(
-                'No code set. Impossible to create an '
-                . 'Authorization Code Flow Request'
-            )
+            '\Authoritarian\Exception\FlowException'
         )->duringGetRequest();
     }
 
