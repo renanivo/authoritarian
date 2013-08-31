@@ -7,16 +7,21 @@ use Prophecy\Argument;
 
 use Authoritarian\Exception\FlowException;
 use Authoritarian\Credential\ClientCredential;
+use Authoritarian\Flow\AuthorizationCodeFlow;
 
 class AuthorizationCodeFlowSpec extends ObjectBehavior
 {
     private $authorizeUrl;
     private $tokenUrl;
+    private $clientId;
+    private $clientSecret;
 
     public function let()
     {
         $this->authorizeUrl = 'http://api.example.com/oauth/authorize';
         $this->tokenUrl = 'http://api.example.com/oauth/token';
+        $this->clientId = 'client id';
+        $this->clientSecret = 'client secret';
 
         $this->beConstructedWith(
             $this->tokenUrl,
@@ -24,7 +29,7 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
         );
         $this->setHttpClient(new \Guzzle\Http\Client());
         $this->setClientCredential(
-            new ClientCredential('client id', 'client secret')
+            new ClientCredential($this->clientId, $this->clientSecret)
         );
         $this->setScope('scope');
     }
@@ -108,63 +113,56 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_a_request_with_code()
     {
-        $this->setCode('my-code');
-        $this->getRequest()->__toString()->shouldMatch('/code=my-code/');
+        $code = 'my-code';
+        $this->setCode($code);
+        $this->getRequest()->shouldHavePostParameter('code', $code);
     }
 
     public function it_should_get_a_request_with_client_id()
     {
         $this->setCode('code');
         $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/client_id=client%20id/');
+            ->shouldHavePostParameter('client_id', $this->clientId);
     }
 
     public function it_should_get_a_request_with_client_secret()
     {
         $this->setCode('code');
         $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/client_secret=client%20secret/');
+            ->shouldHavePostParameter('client_secret', $this->clientSecret);
     }
 
     public function it_should_get_a_request_with_redirect_uri()
     {
+        $callback = 'http://example.com/callback';
         $this->setCode('code');
-        $this->setRedirectUri('http://example.com/callback');
+        $this->setRedirectUri($callback);
         $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/redirect_uri=http%3A%2F%2Fexample.com%2Fcallback/');
+            ->shouldHavePostParameter('redirect_uri', $callback);
     }
 
     public function it_should_get_a_request_with_scope()
     {
         $this->setCode('code');
+        $this->setScope('scope');
         $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/scope=scope/');
+            ->shouldHavePostParameter('scope', 'scope');
     }
 
     public function it_should_get_a_request_with_grant_type()
     {
         $this->setCode('code');
         $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/grant_type=authorization_code/');
-    }
-
-    public function it_should_get_a_request_with_state()
-    {
-        $this->setCode('code');
-        $this->getRequest()
-            ->__toString()
-            ->shouldMatch('/grant_type=authorization_code/');
+            ->shouldHavePostParameter(
+                'grant_type',
+                AuthorizationCodeFlow::GRANT_TYPE
+            );
     }
 
     public function getMatchers()
     {
         return array(
-            'beAValidUrl' => function($subject, $flags) {
+            'beAValidUrl' => function ($subject, $flags) {
                 return false !== filter_var(
                     $subject,
                     FILTER_VALIDATE_URL,
@@ -172,6 +170,14 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
                         'flags' => $flags,
                     )
                 );
+            },
+            'havePostParameter' => function ($subject, $key, $value) {
+                $body = preg_split('/\n\s*\n/', $subject)[1];
+                $parameters = array();
+                parse_str($body, $parameters);
+
+                return array_key_exists($key, $parameters) &&
+                    $parameters[$key] == $value;
             }
         );
     }
