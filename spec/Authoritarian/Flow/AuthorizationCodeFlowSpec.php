@@ -58,7 +58,6 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_the_authorize_url_with_clent_id()
     {
-        $this->setRedirectUri('http://example.com/callback');
         $this->getAuthorizeUrl()
             ->shouldHaveQueryParameter(
                 'client_id',
@@ -68,7 +67,6 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_the_authorize_url_with_the_correct_response_type()
     {
-        $this->setRedirectUri('http://example.com/callback');
         $this->getAuthorizeUrl()
             ->shouldHaveQueryParameter(
                 'response_type',
@@ -79,7 +77,6 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
     public function it_should_get_the_authorize_url_with_the_given_scope()
     {
         $scope = 'scope';
-        $this->setRedirectUri('http://example.com/callback');
         $this->setScope($scope);
         $this->getAuthorizeUrl()
             ->shouldHaveQueryParameter('scope', $scope);
@@ -88,7 +85,6 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
     public function it_should_get_the_authorize_url_with_state_when_given()
     {
         $state = 'state';
-        $this->setRedirectUri('http://example.com/callback');
         $this->setState($state);
         $this->getAuthorizeUrl()
             ->shouldHaveQueryParameter('state', $state);
@@ -96,7 +92,10 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_a_valid_authorize_url()
     {
-        $this->getAuthorizeUrl('http://example.com/callback')
+        $this->setRedirectUri('http://example.com/callback');
+        $this->setScope('scope');
+        $this->setState('state');
+        $this->getAuthorizeUrl()
             ->shouldBeAValidUrl(
                 FILTER_FLAG_PATH_REQUIRED | FILTER_FLAG_QUERY_REQUIRED
             );
