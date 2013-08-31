@@ -11,6 +11,7 @@ use Behat\Mink\Driver\Selenium2Driver;
 
 use Authoritarian\Flow\ResourceOwnerPasswordFlow;
 use Authoritarian\Flow\AuthorizationCodeFlow;
+use Authoritarian\Credential\ClientCredential;
 
 /**
  * Features context.
@@ -40,9 +41,6 @@ class FeatureContext extends BehatContext
     {
         $this->flow = new ResourceOwnerPasswordFlow(
             $this->parameters['token_url'],
-            $this->parameters['client_id'],
-            $this->parameters['client_secret'],
-            $this->parameters['scope'],
             $this->parameters['username'],
             $this->parameters['password']
         );
@@ -53,6 +51,13 @@ class FeatureContext extends BehatContext
      */
     public function iRequestTheAccessToken()
     {
+        $this->flow->setClientCredential(
+            new ClientCredential(
+                $this->parameters['client_id'],
+                $this->parameters['client_secret']
+            )
+        );
+        $this->flow->setScope($this->parameters['scope']);
         $client = new Guzzle\Http\Client();
         $authorization = new Authoritarian\Authorization($client);
         $this->accessToken = $authorization->requestAccessToken($this->flow);
@@ -77,9 +82,6 @@ class FeatureContext extends BehatContext
     {
         $this->flow = new AuthorizationCodeFlow(
             $this->parameters['token_url'],
-            $this->parameters['client_id'],
-            $this->parameters['client_secret'],
-            $this->parameters['scope'],
             $this->parameters['authorize_url']
         );
     }
