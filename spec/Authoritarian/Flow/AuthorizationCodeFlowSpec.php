@@ -47,38 +47,51 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_the_authorize_url_with_callback()
     {
-        $this->setRedirectUri('http://example.com/callback');
+        $callback = 'http://example.com/callback';
+        $this->setRedirectUri($callback);
         $this->getAuthorizeUrl()
-            ->shouldMatch('/redirect_uri=http%3A%2F%2Fexample.com%2Fcallback/');
+            ->shouldHaveQueryParameter(
+                'redirect_uri',
+                $callback
+            );
     }
 
     public function it_should_get_the_authorize_url_with_clent_id()
     {
         $this->setRedirectUri('http://example.com/callback');
         $this->getAuthorizeUrl()
-            ->shouldMatch('/client_id=client\+id/');
+            ->shouldHaveQueryParameter(
+                'client_id',
+                $this->clientId
+            );
     }
 
     public function it_should_get_the_authorize_url_with_the_correct_response_type()
     {
         $this->setRedirectUri('http://example.com/callback');
         $this->getAuthorizeUrl()
-            ->shouldMatch('/response_type=code/');
+            ->shouldHaveQueryParameter(
+                'response_type',
+                AuthorizationCodeFlow::RESPONSE_TYPE
+            );
     }
 
     public function it_should_get_the_authorize_url_with_the_given_scope()
     {
+        $scope = 'scope';
         $this->setRedirectUri('http://example.com/callback');
+        $this->setScope($scope);
         $this->getAuthorizeUrl()
-            ->shouldMatch('/scope=scope/');
+            ->shouldHaveQueryParameter('scope', $scope);
     }
 
     public function it_should_get_the_authorize_url_with_state_when_given()
     {
+        $state = 'state';
         $this->setRedirectUri('http://example.com/callback');
-        $this->setState('state');
+        $this->setState($state);
         $this->getAuthorizeUrl()
-            ->shouldMatch('/state=state/');
+            ->shouldHaveQueryParameter('state', $state);
     }
 
     public function it_should_get_a_valid_authorize_url()
@@ -170,6 +183,14 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
                         'flags' => $flags,
                     )
                 );
+            },
+            'haveQueryParameter' => function ($subject, $key, $value) {
+                $querystring = explode('?', $subject)[1];
+                $parameters = array();
+                parse_str($querystring, $parameters);
+
+                return array_key_exists($key, $parameters) &&
+                    $parameters[$key] == $value;
             },
             'havePostParameter' => function ($subject, $key, $value) {
                 $body = preg_split('/\n\s*\n/', $subject)[1];
