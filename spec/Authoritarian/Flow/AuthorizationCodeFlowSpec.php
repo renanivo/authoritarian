@@ -23,9 +23,10 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
         $this->clientSecret = 'client secret';
 
         $this->beConstructedWith(
-            $this->tokenUrl,
             $this->authorizeUrl
         );
+
+        $this->setTokenUrl($this->tokenUrl);
         $this->setHttpClient(new \Guzzle\Http\Client());
         $this->setClientCredential(
             new ClientCredential($this->clientId, $this->clientSecret)

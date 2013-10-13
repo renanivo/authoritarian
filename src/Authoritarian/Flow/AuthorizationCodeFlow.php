@@ -26,14 +26,13 @@ class AuthorizationCodeFlow implements FlowInterface
      * @param string $token_url The OAuth Token endpoint url
      * @param string $authorize_url The OAuth Authorize endpoint url
      */
-    public function __construct($token_url, $authorize_url)
+    public function __construct($authorize_url)
     {
-        $this->tokenUrl = $token_url;
         $this->authorizeUrl = $authorize_url;
     }
 
     /**
-     * @param Guzzle\Http\ClientInterface $client The HTTP Client
+     * {@inheritDoc}
      */
     public function setHttpClient(\Guzzle\Http\ClientInterface $client)
     {
@@ -41,8 +40,7 @@ class AuthorizationCodeFlow implements FlowInterface
     }
 
     /**
-     * @param Authoritarian\Credential\ClientCredential $credential The App's
-     * Client Credential
+     * {@inheritDoc}
      */
     public function setClientCredential(ClientCredential $credential)
     {
@@ -50,7 +48,15 @@ class AuthorizationCodeFlow implements FlowInterface
     }
 
     /**
-     * @param string The scope the app is requiring access
+     * {@inheritDoc}
+     */
+    public function setTokenUrl($token_url)
+    {
+        $this->tokenUrl = $token_url;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function setScope($scope)
     {
@@ -88,9 +94,17 @@ class AuthorizationCodeFlow implements FlowInterface
     }
 
     /**
-     * Get the authorization request
+     * Get the URL to user's authorization
      *
-     * @return Guzzle\Http\Message\Request
+     * @return string The URL to user's authorization
+     */
+    public function getAuthorizeUrl()
+    {
+        return $this->authorizeUrl . '?' . $this->getAuthorizeQueryParameters();
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function getRequest()
     {
@@ -105,16 +119,6 @@ class AuthorizationCodeFlow implements FlowInterface
             null,
             $this->getRequestPostParameters()
         );
-    }
-
-    /**
-     * Get the URL to user's authorization
-     *
-     * @return string The URL to user's authorization
-     */
-    public function getAuthorizeUrl()
-    {
-        return $this->authorizeUrl . '?' . $this->getAuthorizeQueryParameters();
     }
 
     private function getRequestPostParameters()

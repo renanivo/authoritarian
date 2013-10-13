@@ -10,7 +10,7 @@ use Authoritarian\Credential\ClientCredential;
 interface FlowInterface
 {
     /**
-     * @param \Guzzle\Http\ClientInterface $client The HTTP Client
+     * @param Guzzle\Http\ClientInterface $client The HTTP Client
      */
     public function setHttpClient(\Guzzle\Http\ClientInterface $client);
 
@@ -21,9 +21,15 @@ interface FlowInterface
     public function setClientCredential(ClientCredential $credential);
 
     /**
-     * @param string The scope the app is requiring access
+     * @param string $scope The scope the app is requiring access
      */
     public function setScope($scope);
+
+
+    /**
+     * @param string $token_url The URL to request the Access Token
+     */
+    public function setTokenUrl($token_url);
 
     /**
      * Get the request to the Access Token

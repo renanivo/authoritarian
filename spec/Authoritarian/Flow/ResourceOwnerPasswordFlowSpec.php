@@ -23,14 +23,14 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
         $this->password = 'password';
         $this->clientId = 'client id';
         $this->clientSecret = 'client secret';
+        $client = new \Guzzle\Http\Client();
 
         $this->beConstructedWith(
-            $this->tokenUrl,
             $this->username,
             $this->password
         );
 
-        $client = new \Guzzle\Http\Client();
+        $this->setTokenUrl($this->tokenUrl);
         $this->setHttpClient($client);
         $this->setClientCredential(
             new ClientCredential($this->clientId, $this->clientSecret)

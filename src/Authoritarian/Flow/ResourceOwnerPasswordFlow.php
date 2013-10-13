@@ -22,9 +22,8 @@ class ResourceOwnerPasswordFlow implements FlowInterface
      * @param string $username The user's username to login
      * @param string $password The user's password
      */
-    public function __construct($token_url, $username, $password)
+    public function __construct($username, $password)
     {
-        $this->tokenUrl = $token_url;
         $this->setParameter('username', $username);
         $this->setParameter('password', $password);
         $this->setParameter('grant_type', self::GRANT_TYPE);
@@ -46,6 +45,14 @@ class ResourceOwnerPasswordFlow implements FlowInterface
     {
         $this->setParameter('client_id', $credential->getId());
         $this->setParameter('client_secret', $credential->getSecret());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setTokenUrl($token_url)
+    {
+        $this->tokenUrl = $token_url;
     }
 
     /**
