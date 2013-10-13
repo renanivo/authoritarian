@@ -11,10 +11,9 @@ interface AuthorizationInterface
     /**
      * Requests the token endpoint and get the user's Access Token
      *
-     * @param \Authoritarian\Flow\AuthorizationFlowInterface $flow  The Oauth2 
-     * flow
+     * @param \Authoritarian\Flow\FlowInterface $flow  The Oauth2 flow
      *
      * @return array
      */
-    public function requestAccessToken(Flow\AuthorizationFlowInterface $flow);
+    public function requestAccessToken(Flow\FlowInterface $flow);
 }

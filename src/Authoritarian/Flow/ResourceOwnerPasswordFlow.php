@@ -8,7 +8,7 @@ use Authoritarian\Credential\ClientCredential;
  * Implementation of the Authorization Flow Interface to
  * the Resource Owner Password Flow of OAuth 2
  **/
-class ResourceOwnerPasswordFlow implements AuthorizationFlowInterface
+class ResourceOwnerPasswordFlow implements FlowInterface
 {
     const GRANT_TYPE = 'password';
 

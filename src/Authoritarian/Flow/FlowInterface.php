@@ -7,7 +7,7 @@ use Authoritarian\Credential\ClientCredential;
 /**
  *  Authorization Flow interface to generate Access Token Requests
  */
-interface AuthorizationFlowInterface
+interface FlowInterface
 {
     /**
      * @param \Guzzle\Http\ClientInterface $client The HTTP Client

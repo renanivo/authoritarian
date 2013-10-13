@@ -9,7 +9,7 @@ use Authoritarian\Credential\ClientCredential;
  * Implementation of the Authorization Flow Interface to
  * the Authorization Code Flow of Oauth 2
  **/
-class AuthorizationCodeFlow implements AuthorizationFlowInterface
+class AuthorizationCodeFlow implements FlowInterface
 {
     const GRANT_TYPE = 'authorization_code';
     const RESPONSE_TYPE = 'code';
