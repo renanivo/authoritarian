@@ -3,6 +3,7 @@
 namespace Authoritarian\Flow;
 
 use Authoritarian\Exception\Flow\MissingAuthorizationCodeException;
+use Authoritarian\Exception\Flow\MissingTokenUrlException;
 use Authoritarian\Credential\ClientCredential;
 
 /**
@@ -23,7 +24,6 @@ class AuthorizationCodeFlow implements FlowInterface
     protected $parameters;
 
     /**
-     * @param string $token_url The OAuth Token endpoint url
      * @param string $authorize_url The OAuth Authorize endpoint url
      */
     public function __construct($authorize_url)
@@ -105,12 +105,19 @@ class AuthorizationCodeFlow implements FlowInterface
 
     /**
      * {@inheritDoc}
+     * @throws Authoritarian\Exception\Flow\MissingAuthorizationCodeException When the authorization code wasn't set
      */
     public function getRequest()
     {
         if (is_null($this->code)) {
             throw new MissingAuthorizationCodeException(
                 'No authorization code given to generate a request'
+            );
+        }
+
+        if (is_null($this->tokenUrl)) {
+            throw new MissingTokenUrlException(
+                'No OAuth token URL given to generate a request'
             );
         }
 

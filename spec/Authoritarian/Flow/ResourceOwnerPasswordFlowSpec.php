@@ -42,6 +42,14 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
         $this->shouldHaveType('Authoritarian\Flow\ResourceOwnerPasswordFlow');
     }
 
+    public function it_should_throw_an_exception_to_get_a_request_without_token_url()
+    {
+        $this->setTokenUrl(null);
+        $this->shouldThrow(
+            '\Authoritarian\Exception\FlowException'
+        )->duringGetRequest();
+    }
+
     public function it_should_create_a_request_to_the_token_url()
     {
         $this->getRequest()->getUrl()->shouldBeEqualTo($this->tokenUrl);

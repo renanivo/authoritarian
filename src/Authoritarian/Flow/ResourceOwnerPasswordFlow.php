@@ -3,6 +3,7 @@
 namespace Authoritarian\Flow;
 
 use Authoritarian\Credential\ClientCredential;
+use Authoritarian\Exception\Flow\MissingTokenUrlException;
 
 /**
  * Implementation of the Authorization Flow Interface to
@@ -70,6 +71,12 @@ class ResourceOwnerPasswordFlow implements FlowInterface
      */
     public function getRequest()
     {
+        if (is_null($this->tokenUrl)) {
+            throw new MissingTokenUrlException(
+                'No OAuth token URL given to generate a request'
+            );
+        }
+
         return $this->client->post(
             $this->tokenUrl,
             $this->getContentTypeFormUrlencodedHeader(),

@@ -14,6 +14,8 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
     private $tokenUrl;
     private $clientId;
     private $clientSecret;
+    private $code;
+    private $scope;
 
     public function let()
     {
@@ -21,17 +23,20 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
         $this->tokenUrl = 'http://api.example.com/oauth/token';
         $this->clientId = 'client id';
         $this->clientSecret = 'client secret';
+        $this->code = 'code';
+        $this->scope = 'scope';
 
         $this->beConstructedWith(
             $this->authorizeUrl
         );
 
-        $this->setTokenUrl($this->tokenUrl);
         $this->setHttpClient(new \Guzzle\Http\Client());
         $this->setClientCredential(
             new ClientCredential($this->clientId, $this->clientSecret)
         );
-        $this->setScope('scope');
+        $this->setScope($this->scope);
+        $this->setCode($this->code);
+        $this->setTokenUrl($this->tokenUrl);
     }
 
     public function it_should_be_initializable()
@@ -76,10 +81,8 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_the_authorize_url_with_the_given_scope()
     {
-        $scope = 'scope';
-        $this->setScope($scope);
         $this->getAuthorizeUrl()
-            ->shouldHaveQueryParameter('scope', $scope);
+            ->shouldHaveQueryParameter('scope', $this->scope);
     }
 
     public function it_should_get_the_authorize_url_with_state_when_given()
@@ -93,7 +96,6 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
     public function it_should_get_a_valid_authorize_url()
     {
         $this->setRedirectUri('http://example.com/callback');
-        $this->setScope('scope');
         $this->setState('state');
         $this->getAuthorizeUrl()
             ->shouldBeAValidUrl(
@@ -103,6 +105,15 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_throw_an_exception_to_get_a_request_without_code()
     {
+        $this->setCode(null);
+        $this->shouldThrow(
+            '\Authoritarian\Exception\FlowException'
+        )->duringGetRequest();
+    }
+
+    public function it_should_throw_an_exception_to_get_a_request_without_token_url()
+    {
+        $this->setTokenUrl(null);
         $this->shouldThrow(
             '\Authoritarian\Exception\FlowException'
         )->duringGetRequest();
@@ -110,33 +121,27 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_post_a_request()
     {
-        $this->setCode('code');
         $this->getRequest()->getMethod()->shouldBe('POST');
     }
 
     public function it_should_get_a_request_to_the_token_url()
     {
-        $this->setCode('code');
         $this->getRequest()->getUrl()->shouldBeEqualTo($this->tokenUrl);
     }
 
     public function it_should_get_a_request_with_code()
     {
-        $code = 'my-code';
-        $this->setCode($code);
-        $this->getRequest()->shouldHavePostParameter('code', $code);
+        $this->getRequest()->shouldHavePostParameter('code', $this->code);
     }
 
     public function it_should_get_a_request_with_client_id()
     {
-        $this->setCode('code');
         $this->getRequest()
             ->shouldHavePostParameter('client_id', $this->clientId);
     }
 
     public function it_should_get_a_request_with_client_secret()
     {
-        $this->setCode('code');
         $this->getRequest()
             ->shouldHavePostParameter('client_secret', $this->clientSecret);
     }
@@ -144,7 +149,6 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
     public function it_should_get_a_request_with_redirect_uri()
     {
         $callback = 'http://example.com/callback';
-        $this->setCode('code');
         $this->setRedirectUri($callback);
         $this->getRequest()
             ->shouldHavePostParameter('redirect_uri', $callback);
@@ -152,15 +156,19 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_a_request_with_scope()
     {
-        $this->setCode('code');
-        $this->setScope('scope');
         $this->getRequest()
-            ->shouldHavePostParameter('scope', 'scope');
+            ->shouldHavePostParameter('scope', $this->scope);
+    }
+
+    public function it_should_get_a_request_without_scope()
+    {
+        $this->setScope(null);
+        $this->getRequest()
+            ->shouldNotHavePostParameter('scope', '');
     }
 
     public function it_should_get_a_request_with_grant_type()
     {
-        $this->setCode('code');
         $this->getRequest()
             ->shouldHavePostParameter(
                 'grant_type',

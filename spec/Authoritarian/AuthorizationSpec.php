@@ -22,6 +22,7 @@ class AuthorizationSpec extends ObjectBehavior
         $client->addSubscriber($this->responses);
 
         $this->beConstructedWith($client);
+        $this->setTokenUrl('http://example.com/oauth/token');
     }
 
     public function it_should_be_initializable()

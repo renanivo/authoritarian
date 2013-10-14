@@ -34,6 +34,8 @@ interface FlowInterface
     /**
      * Get the request to the Access Token
      *
+     * @throws Authoritarian\Exception\Flow\MissingTokenUrlException When the OAuth token URL wasn't set
+     *
      * @return \Guzzle\Http\Message\RequestInterface
      */
     public function getRequest();
