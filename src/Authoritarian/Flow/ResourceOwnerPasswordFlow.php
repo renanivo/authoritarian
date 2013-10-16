@@ -9,7 +9,7 @@ use Authoritarian\Exception\Flow\MissingTokenUrlException;
  * Implementation of the Authorization Flow Interface to
  * the Resource Owner Password Flow of OAuth 2
  **/
-class ResourceOwnerPasswordFlow implements FlowInterface
+class ResourceOwnerPasswordFlow extends AbstractFlow
 {
     const GRANT_TYPE = 'password';
 
@@ -32,28 +32,12 @@ class ResourceOwnerPasswordFlow implements FlowInterface
     }
 
     /**
-     * @param Guzzle\Http\ClientInterface $client The HTTP Client
-     */
-    public function setHttpClient(\Guzzle\Http\ClientInterface $client)
-    {
-        $this->client = $client;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function setClientCredential($client_id, $client_secret)
     {
         $this->setParameter('client_id', $client_id);
         $this->setParameter('client_secret', $client_secret);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setTokenUrl($token_url)
-    {
-        $this->tokenUrl = $token_url;
     }
 
     /**

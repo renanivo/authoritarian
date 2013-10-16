@@ -10,7 +10,7 @@ use Authoritarian\Credential\ClientCredential;
  * Implementation of the Authorization Flow Interface to
  * the Authorization Code Flow of Oauth 2
  **/
-class AuthorizationCodeFlow implements FlowInterface
+class AuthorizationCodeFlow extends AbstractFlow
 {
     const GRANT_TYPE = 'authorization_code';
     const RESPONSE_TYPE = 'code';
@@ -35,26 +35,10 @@ class AuthorizationCodeFlow implements FlowInterface
     /**
      * {@inheritDoc}
      */
-    public function setHttpClient(\Guzzle\Http\ClientInterface $client)
-    {
-        $this->client = $client;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function setClientCredential($client_id, $client_secret)
     {
         $this->clientId = $client_id;
         $this->clientSecret = $client_secret;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setTokenUrl($token_url)
-    {
-        $this->tokenUrl = $token_url;
     }
 
     /**

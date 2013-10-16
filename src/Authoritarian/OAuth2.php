@@ -38,7 +38,7 @@ class OAuth2 implements OAuth2Interface
     /**
      * {@inheritDoc}
      */
-    public function requestAccessToken(Flow\FlowInterface $flow)
+    public function requestAccessToken(Flow\AbstractFlow $flow)
     {
         $flow->setHttpClient($this->client);
         $flow->setTokenUrl($this->tokenUrl);
