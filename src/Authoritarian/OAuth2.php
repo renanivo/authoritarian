@@ -44,13 +44,7 @@ class OAuth2 implements OAuth2Interface
         $flow->setTokenUrl($this->tokenUrl);
         $flow->setClientCredential($this->clientId, $this->clientSecret);
 
-        $response = $flow->getRequest()->send();
-
-        if ($this->hasJsonHeader($response)) {
-            return $response->json();
-        } else {
-            return (string) $response->getBody();
-        }
+        return $flow->getRequest()->send();
     }
 
     protected function hasJsonHeader($response)
