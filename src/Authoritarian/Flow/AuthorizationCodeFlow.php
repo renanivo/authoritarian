@@ -3,7 +3,6 @@
 namespace Authoritarian\Flow;
 
 use Authoritarian\Exception\Flow\MissingAuthorizationCodeException;
-use Authoritarian\Exception\Flow\MissingTokenUrlException;
 use Authoritarian\Credential\ClientCredential;
 
 /**
@@ -89,15 +88,11 @@ class AuthorizationCodeFlow extends AbstractFlow
      */
     public function getRequest()
     {
+        parent::getRequest();
+
         if (is_null($this->code)) {
             throw new MissingAuthorizationCodeException(
                 'No authorization code given to generate a request'
-            );
-        }
-
-        if (is_null($this->tokenUrl)) {
-            throw new MissingTokenUrlException(
-                'No OAuth token URL given to generate a request'
             );
         }
 
