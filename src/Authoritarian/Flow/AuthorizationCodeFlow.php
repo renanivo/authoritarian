@@ -16,12 +16,13 @@ class AuthorizationCodeFlow implements FlowInterface
     const RESPONSE_TYPE = 'code';
 
     protected $tokenUrl;
-    protected $clientCredential;
     protected $authorizeUrl;
     protected $code;
     protected $redirectUri;
     protected $state;
     protected $parameters;
+    protected $clientId;
+    protected $clientSecret;
 
     /**
      * @param string $authorize_url The OAuth Authorize endpoint url
@@ -42,9 +43,10 @@ class AuthorizationCodeFlow implements FlowInterface
     /**
      * {@inheritDoc}
      */
-    public function setClientCredential(ClientCredential $credential)
+    public function setClientCredential($client_id, $client_secret)
     {
-        $this->clientCredential = $credential;
+        $this->clientId = $client_id;
+        $this->clientSecret = $client_secret;
     }
 
     /**
@@ -126,8 +128,8 @@ class AuthorizationCodeFlow implements FlowInterface
     {
         $parameters = array(
             'code' => $this->code,
-            'client_id' => $this->clientCredential->getId(),
-            'client_secret' => $this->clientCredential->getSecret(),
+            'client_id' => $this->clientId,
+            'client_secret' => $this->clientSecret,
             'grant_type' => self::GRANT_TYPE,
             'redirect_uri' => $this->redirectUri,
             'scope' => $this->scope,
@@ -140,7 +142,7 @@ class AuthorizationCodeFlow implements FlowInterface
     {
         $parameters = array(
             'redirect_uri' => $this->redirectUri,
-            'client_id' => $this->clientCredential->getId(),
+            'client_id' => $this->clientId,
             'response_type' => self::RESPONSE_TYPE,
             'scope' => $this->scope,
             'state' => $this->state,

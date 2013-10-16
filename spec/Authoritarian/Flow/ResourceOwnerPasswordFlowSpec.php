@@ -32,9 +32,7 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
 
         $this->setTokenUrl($this->tokenUrl);
         $this->setHttpClient($client);
-        $this->setClientCredential(
-            new ClientCredential($this->clientId, $this->clientSecret)
-        );
+        $this->setClientCredential($this->clientId, $this->clientSecret);
     }
 
     public function it_should_be_initializable()

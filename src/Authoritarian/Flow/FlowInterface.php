@@ -15,10 +15,10 @@ interface FlowInterface
     public function setHttpClient(\Guzzle\Http\ClientInterface $client);
 
     /**
-     * @param Authoritarian\Credential\ClientCredential $credential The App's
-     * Client Credentials
+     * @param string $client_id     The app's client id
+     * @param string $client_secret The app's client secret
      */
-    public function setClientCredential(ClientCredential $credential);
+    public function setClientCredential($client_id, $client_secret);
 
     /**
      * @param string $scope The scope the app is requiring access

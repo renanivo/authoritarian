@@ -15,7 +15,8 @@ class ResourceOwnerPasswordFlow implements FlowInterface
 
     protected $client;
     protected $tokenUrl;
-    protected $clientCredential;
+    protected $clientId;
+    protected $clientSecret;
     protected $parameters = array();
 
     /**
@@ -39,13 +40,12 @@ class ResourceOwnerPasswordFlow implements FlowInterface
     }
 
     /**
-     * @param Authoritarian\Credential\ClientCredential $credential The App's
-     * Client Credential
+     * {@inheritDoc}
      */
-    public function setClientCredential(ClientCredential $credential)
+    public function setClientCredential($client_id, $client_secret)
     {
-        $this->setParameter('client_id', $credential->getId());
-        $this->setParameter('client_secret', $credential->getSecret());
+        $this->setParameter('client_id', $client_id);
+        $this->setParameter('client_secret', $client_secret);
     }
 
     /**

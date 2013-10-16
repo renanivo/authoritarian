@@ -8,8 +8,9 @@ namespace Authoritarian;
 class OAuth2 implements OAuth2Interface
 {
     protected $client;
-    protected $clientCredential;
     protected $tokenUrl;
+    protected $clientId;
+    protected $clientSecret;
 
     public function __construct(\Guzzle\Http\ClientInterface $client)
     {
@@ -17,12 +18,13 @@ class OAuth2 implements OAuth2Interface
     }
 
     /**
-     * @param Credential\ClientCredencial $credential The app's client id and
-     * secret
+     * @param string $client_id     The app's client id
+     * @param string $client_secret The app's client secret
      */
-    public function setClientCredential(Credential\ClientCredencial $credential)
+    public function setClientCredential($client_id, $client_secret)
     {
-        $this->clientCredential = $credential;
+        $this->clientId = $client_id;
+        $this->clientSecret = $client_secret;
     }
 
     /**
