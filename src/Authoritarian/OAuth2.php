@@ -16,16 +16,26 @@ class OAuth2 implements OAuth2Interface
         $this->client = $client;
     }
 
+    /**
+     * @param Credential\ClientCredencial $credential The app's client id and
+     * secret
+     */
     public function setClientCredential(Credential\ClientCredencial $credential)
     {
         $this->clientCredential = $credential;
     }
 
+    /**
+     * @param string $token_url Then endpoint to request the Access Token
+     */
     public function setTokenUrl($token_url)
     {
         $this->tokenUrl = $token_url;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function requestAccessToken(Flow\FlowInterface $flow)
     {
         $flow->setHttpClient($this->client);

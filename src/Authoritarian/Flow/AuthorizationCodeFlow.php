@@ -64,8 +64,6 @@ class AuthorizationCodeFlow implements FlowInterface
     }
 
     /**
-     * Set the Code retrived from the querystring after the user's authorization
-     *
      * @param string $code The Authorization Code
      */
     public function setCode($code)
@@ -74,9 +72,7 @@ class AuthorizationCodeFlow implements FlowInterface
     }
 
     /**
-     * Set the URI that will be used to retrieve the authorization code
-     *
-     * @param string $url the callback URI
+     * @param string $url the callback URI to retrieve the authorization code
      */
     public function setRedirectUri($url)
     {
@@ -84,9 +80,7 @@ class AuthorizationCodeFlow implements FlowInterface
     }
 
     /**
-     * Set a CSRF token to validate the response code
-     *
-     * @param string $state the CSRF token
+     * @param string $state the CSRF token to validate the response code
      */
     public function setState($state)
     {
