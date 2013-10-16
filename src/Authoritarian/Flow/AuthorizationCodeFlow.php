@@ -14,7 +14,6 @@ class AuthorizationCodeFlow extends AbstractFlow
     const GRANT_TYPE = 'authorization_code';
     const RESPONSE_TYPE = 'code';
 
-    protected $tokenUrl;
     protected $authorizeUrl;
     protected $code;
     protected $redirectUri;
