@@ -23,6 +23,7 @@ class OAuth2Spec extends ObjectBehavior
 
         $this->beConstructedWith($client);
         $this->setTokenUrl('http://example.com/oauth/token');
+        $this->setClientCredential('username', 'password');
     }
 
     public function it_should_be_initializable()

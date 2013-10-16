@@ -42,6 +42,7 @@ class OAuth2 implements OAuth2Interface
     {
         $flow->setHttpClient($this->client);
         $flow->setTokenUrl($this->tokenUrl);
+        $flow->setClientCredential($this->clientId, $this->clientSecret);
 
         $response = $flow->getRequest()->send();
 

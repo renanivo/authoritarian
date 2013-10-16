@@ -19,8 +19,6 @@ class AuthorizationCodeFlow extends AbstractFlow
     protected $redirectUri;
     protected $state;
     protected $parameters;
-    protected $clientId;
-    protected $clientSecret;
 
     /**
      * @param string $authorize_url The OAuth Authorize endpoint url
@@ -28,23 +26,6 @@ class AuthorizationCodeFlow extends AbstractFlow
     public function __construct($authorize_url)
     {
         $this->authorizeUrl = $authorize_url;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setClientCredential($client_id, $client_secret)
-    {
-        $this->clientId = $client_id;
-        $this->clientSecret = $client_secret;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setScope($scope)
-    {
-        $this->scope = $scope;
     }
 
     /**
@@ -128,16 +109,6 @@ class AuthorizationCodeFlow extends AbstractFlow
 
         return http_build_query(
             $this->removeNullItems($parameters)
-        );
-    }
-
-    private function removeNullItems(array $parameters)
-    {
-        return array_filter(
-            $parameters,
-            function ($item) {
-                return !is_null($item);
-            }
         );
     }
 }

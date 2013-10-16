@@ -13,9 +13,8 @@ class ResourceOwnerPasswordFlow extends AbstractFlow
 {
     const GRANT_TYPE = 'password';
 
-    protected $clientId;
-    protected $clientSecret;
-    protected $parameters = array();
+    protected $username;
+    protected $password;
 
     /**
      * @param string $token_url The OAuth server endpoint to obtain the access tokens
@@ -24,26 +23,8 @@ class ResourceOwnerPasswordFlow extends AbstractFlow
      */
     public function __construct($username, $password)
     {
-        $this->setParameter('username', $username);
-        $this->setParameter('password', $password);
-        $this->setParameter('grant_type', self::GRANT_TYPE);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setClientCredential($client_id, $client_secret)
-    {
-        $this->setParameter('client_id', $client_id);
-        $this->setParameter('client_secret', $client_secret);
-    }
-
-    /**
-     * @param string The scope the app is requiring access
-     */
-    public function setScope($scope)
-    {
-        $this->setParameter('scope', $scope);
+        $this->username = $username;
+        $this->password = $password;
     }
 
     /**
@@ -53,22 +34,22 @@ class ResourceOwnerPasswordFlow extends AbstractFlow
      */
     public function getRequest()
     {
-        if (is_null($this->tokenUrl)) {
-            throw new MissingTokenUrlException(
-                'No OAuth token URL given to generate a request'
-            );
-        }
+        parent::getRequest();
 
         return $this->client->post(
             $this->tokenUrl,
             $this->getContentTypeFormUrlencodedHeader(),
-            $this->parameters
+            $this->removeNullItems(
+                array(
+                    'client_id' => $this->clientId,
+                    'client_secret' => $this->clientSecret,
+                    'username' => $this->username,
+                    'password' => $this->password,
+                    'scope' => $this->scope,
+                    'grant_type' => self::GRANT_TYPE,
+                )
+            )
         );
-    }
-
-    private function setParameter($key, $value)
-    {
-        $this->parameters[$key] = $value;
     }
 
     private function getContentTypeFormUrlencodedHeader()

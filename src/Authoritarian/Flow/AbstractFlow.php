@@ -4,6 +4,7 @@ namespace Authoritarian\Flow;
 
 use Authoritarian\Credential\ClientCredential;
 use Authoritarian\Exception\Flow\MissingTokenUrlException;
+use Authoritarian\Exception\Flow\MissingClientCredentialException;
 
 /**
  *  Authorization Flow interface to generate Access Token Requests
@@ -12,6 +13,9 @@ abstract class AbstractFlow
 {
     protected $client;
     protected $tokenUrl;
+    protected $clientId;
+    protected $clientSecret;
+    protected $scope;
 
     /**
      * @param Guzzle\Http\ClientInterface $client The HTTP Client
@@ -30,6 +34,24 @@ abstract class AbstractFlow
     }
 
     /**
+     * @param string $client_id     The app's client id
+     * @param string $client_secret The app's client secret
+     */
+    public function setClientCredential($client_id, $client_secret)
+    {
+        $this->clientId = $client_id;
+        $this->clientSecret = $client_secret;
+    }
+
+    /**
+     * @param string $scope The scope the app is requiring access
+     */
+    public function setScope($scope)
+    {
+        $this->scope = $scope;
+    }
+
+    /**
      * Get the request to the Access Token
      *
      * @throws Authoritarian\Exception\Flow\MissingTokenUrlException When the OAuth token URL wasn't set
@@ -42,17 +64,22 @@ abstract class AbstractFlow
                 'No OAuth token URL given to generate a request'
             );
         }
+
+        if (is_null($this->clientId) || is_null($this->clientSecret)) {
+            throw new MissingClientCredentialException(
+                'No Client Id or Client Secret given to generate a request'
+            );
+        }
     }
 
-    /**
-     * @param string $client_id     The app's client id
-     * @param string $client_secret The app's client secret
-     */
-    abstract public function setClientCredential($client_id, $client_secret);
-
-    /**
-     * @param string $scope The scope the app is requiring access
-     */
-    abstract public function setScope($scope);
+    protected function removeNullItems(array $parameters)
+    {
+        return array_filter(
+            $parameters,
+            function ($item) {
+                return !is_null($item);
+            }
+        );
+    }
 }
 
