@@ -13,7 +13,6 @@ class ResourceOwnerPasswordFlow extends AbstractFlow
 {
     const GRANT_TYPE = 'password';
 
-    protected $client;
     protected $clientId;
     protected $clientSecret;
     protected $parameters = array();
