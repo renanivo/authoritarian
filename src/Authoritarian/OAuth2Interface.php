@@ -4,9 +4,9 @@ namespace Authoritarian;
 
 
 /**
- * Authorization interface to obtain the user's Access Token
+ * OAuth 2 interface to obtain the user's Access Token
  */
-interface AuthorizationInterface
+interface OAuth2Interface
 {
     /**
      * Requests the token endpoint and get the user's Access Token

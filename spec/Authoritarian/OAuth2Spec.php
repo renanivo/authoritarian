@@ -11,7 +11,7 @@ use Prophecy\Argument;
 
 use Authoritarian\Flow\ResourceOwnerPasswordFlow;
 
-class AuthorizationSpec extends ObjectBehavior
+class OAuth2Spec extends ObjectBehavior
 {
     public $responses;
 
@@ -27,7 +27,7 @@ class AuthorizationSpec extends ObjectBehavior
 
     public function it_should_be_initializable()
     {
-        $this->shouldHaveType('Authoritarian\Authorization');
+        $this->shouldHaveType('Authoritarian\OAuth2');
     }
 
     public function it_should_get_the_response_of_the_flow_request()

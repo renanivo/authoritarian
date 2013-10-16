@@ -3,9 +3,9 @@
 namespace Authoritarian;
 
 /**
- * Authorization class to get the user's access token
+ * Implementation of OAuthInterface to get the user's access token using OAuth2
  **/
-class Authorization implements AuthorizationInterface
+class OAuth2 implements OAuth2Interface
 {
     protected $client;
     protected $clientCredential;
