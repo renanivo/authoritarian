@@ -11,7 +11,6 @@ use Behat\Mink\Driver\Selenium2Driver;
 
 use Authoritarian\Flow\ResourceOwnerPasswordFlow;
 use Authoritarian\Flow\AuthorizationCodeFlow;
-use Authoritarian\Credential\ClientCredential;
 
 /**
  * Features context.
@@ -31,7 +30,6 @@ class FeatureContext extends BehatContext
     public function __construct(array $parameters)
     {
         $this->parameters = $parameters;
-        putenv('NODE_PATH=' . dirname(dirname(__DIR__)) . '/node_modules/');
     }
 
     /**
@@ -40,9 +38,12 @@ class FeatureContext extends BehatContext
     public function iUseTheResourceOwnerPasswordFlow()
     {
         $this->flow = new ResourceOwnerPasswordFlow(
-            $this->parameters['token_url'],
             $this->parameters['username'],
             $this->parameters['password']
+        );
+        $this->flow->setClientCredential(
+            $this->parameters['client_id'],
+            $this->parameters['client_secret']
         );
     }
 
@@ -51,25 +52,19 @@ class FeatureContext extends BehatContext
      */
     public function iRequestTheAccessToken()
     {
-        $this->flow->setClientCredential(
-            new ClientCredential(
-                $this->parameters['client_id'],
-                $this->parameters['client_secret']
-            )
-        );
-        $this->flow->setScope($this->parameters['scope']);
         $client = new Guzzle\Http\Client();
-        $authorization = new Authoritarian\Authorization($client);
-        $this->accessToken = $authorization->requestAccessToken($this->flow);
+        $oauth2 = new Authoritarian\OAuth2($client);
+        $oauth2->setTokenUrl($this->parameters['token_url']);
+        $this->accessToken = $oauth2->requestAccessToken($this->flow);
     }
 
     /**
-     * @Then /^I should get an array with the access token$/
+     * @Then /^I should get a response with the access token$/
      */
     public function iShouldGetAnArray()
     {
-        if (!is_array($this->accessToken) ||
-            !array_key_exists('access_token', $this->accessToken)
+        if (!is_array($this->accessToken->json()) ||
+            !array_key_exists('access_token', $this->accessToken->json())
         ) {
             throw new Exception('Access token should be an array');
         }
@@ -81,8 +76,11 @@ class FeatureContext extends BehatContext
     public function iUseTheAuthorizationCodeFlow()
     {
         $this->flow = new AuthorizationCodeFlow(
-            $this->parameters['token_url'],
             $this->parameters['authorize_url']
+        );
+        $this->flow->setClientCredential(
+            $this->parameters['client_id'],
+            $this->parameters['client_secret']
         );
     }
 
@@ -99,8 +97,8 @@ class FeatureContext extends BehatContext
         $this->fillLoginFormAndSubmit($session->getPage());
 
         if ($this->wasAuthorizationButtonPrompted($session->getCurrentUrl())) {
-            $session->getPage()
-                ->pressButton($this->parameters['authorize_button']);
+            $page = $session->getPage();
+            $page->pressButton($this->parameters['authorize_button']);
         }
 
         $code = $this->getAuthorizationCode($session->getCurrentUrl());

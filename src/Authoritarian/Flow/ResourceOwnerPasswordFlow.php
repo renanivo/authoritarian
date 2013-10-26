@@ -17,7 +17,6 @@ class ResourceOwnerPasswordFlow extends AbstractFlow
     protected $password;
 
     /**
-     * @param string $token_url The OAuth server endpoint to obtain the access tokens
      * @param string $username The user's username to login
      * @param string $password The user's password
      */

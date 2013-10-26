@@ -9,7 +9,7 @@ use Guzzle\Http\Message\Response;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-use Authoritarian\Flow\ResourceOwnerPasswordFlow;
+use Authoritarian\Flow\ClientCredentialsFlow;
 
 class OAuth2Spec extends ObjectBehavior
 {
@@ -23,7 +23,6 @@ class OAuth2Spec extends ObjectBehavior
 
         $this->beConstructedWith($client);
         $this->setTokenUrl('http://example.com/oauth/token');
-        $this->setClientCredential('username', 'password');
     }
 
     public function it_should_be_initializable()
@@ -39,8 +38,10 @@ class OAuth2Spec extends ObjectBehavior
             'response'
         );
         $this->responses->addResponse($response);
+        $flow = new ClientCredentialsFlow();
+        $flow->setClientCredential('username', 'password');
 
-        $this->requestAccessToken(new ResourceOwnerPasswordFlow('', ''))
+        $this->requestAccessToken($flow)
             ->shouldHaveType('Guzzle\Http\Message\Response');
     }
 }
