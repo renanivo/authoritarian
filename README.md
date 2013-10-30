@@ -12,73 +12,70 @@ Get [composer](http://getcomposer.org/) and execute:
 php composer.phar require renanivo/authoritarian
 ```
 
-Enter the version or `dev-master` to get the repository latest.
-
 Usage
 -----
 
-### Setup your client credentials
+You just need two steps to request the access token to your OAuth2 provider:
+
+## Step 1 - Setup your flow
+
+### Client Credentials Flow
 ```php
-<?php
+use Authoritarian\Flow\ClientCredentialsFlow;
 
-use Authoritarian\Credential\ClientCredential;
-
-$credential = new ClientCredential(
-    'client id',
-    'client secret'
-);
+$flow = new ClientCredentialsFlow();
+$flow->setClientCredential('client id', 'client secret');
 ```
 
-### Choose your authorization flow
+### Authorization-Code Flow
 
-#### Authorization-Code Flow
+in the login page:
+
 ```php
 <?php
 
 use Authoritarian\Flow\AuthorizationCodeFlow;
 
 $flow = new AuthorizationCodeFlow(
-    'http://example.com/oauth/token',
     'http://example.com/oauth/authorize'
 );
 
-$flow->setClientCredentials($credential);
-$flow->setScope('scope');
+$flow->setClientCredential('client id', 'client secret');
 $flow->setCallbackUri('http://example.com/callback');
 
-$url = $flow->getAuthorizeUrl();
+header('Location: ' . $flow->getAuthUrl());
+```
 
-// redirect the user to the $url
+in the callback page:
 
-// in the callback page
+```php
 $code = $_GET['code'];
 $flow->setCode($code);
 ```
 
-#### Resource Owner Password
+### Resource Owner Password
 ```php
 <?php
 
 use Authoritarian\Flow\ResourceOwnerPasswordFlow;
 
 $flow = new ResourceOwnerPasswordFlow(
-    'http://example.com/oauth/token',
     'username',
     'password'
 );
 
-$flow->setClientCredentials($credential);
+$flow->setClientCredential($credential);
 $flow->setScope('scope');
 ```
 
-### Request the access token
+## Step 2 - Request the access token
 ```php
 <?php
 
-use Authoritarian\Authorization;
+use Authoritarian\OAuth2;
 
-$authorization = new Authorization();
-$token = $authorization->requestAccessToken($flow);
+$oauth2 = new OAuth2();
+$oauth2->setToken('http://example.com/oauth/token');
 
-// you can use the token to make requests authorized by the user
+$token = $oauth2->requestAccessToken($flow)->json();
 ```
