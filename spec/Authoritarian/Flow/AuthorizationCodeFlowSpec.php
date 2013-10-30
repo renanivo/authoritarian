@@ -44,7 +44,7 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_the_authorize_url()
     {
-        $this->getAuthorizeUrl()
+        $this->getAuthUrl()
             ->shouldStartWith($this->authorizeUrl);
     }
 
@@ -52,7 +52,7 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
     {
         $callback = 'http://example.com/callback';
         $this->setRedirectUri($callback);
-        $this->getAuthorizeUrl()
+        $this->getAuthUrl()
             ->shouldHaveQueryParameter(
                 'redirect_uri',
                 $callback
@@ -61,7 +61,7 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_the_authorize_url_with_clent_id()
     {
-        $this->getAuthorizeUrl()
+        $this->getAuthUrl()
             ->shouldHaveQueryParameter(
                 'client_id',
                 $this->clientId
@@ -70,7 +70,7 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_the_authorize_url_with_the_correct_response_type()
     {
-        $this->getAuthorizeUrl()
+        $this->getAuthUrl()
             ->shouldHaveQueryParameter(
                 'response_type',
                 AuthorizationCodeFlow::RESPONSE_TYPE
@@ -79,7 +79,7 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
     public function it_should_get_the_authorize_url_with_the_given_scope()
     {
-        $this->getAuthorizeUrl()
+        $this->getAuthUrl()
             ->shouldHaveQueryParameter('scope', $this->scope);
     }
 
@@ -87,7 +87,7 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
     {
         $state = 'state';
         $this->setState($state);
-        $this->getAuthorizeUrl()
+        $this->getAuthUrl()
             ->shouldHaveQueryParameter('state', $state);
     }
 
@@ -95,7 +95,7 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
     {
         $this->setRedirectUri('http://example.com/callback');
         $this->setState('state');
-        $this->getAuthorizeUrl()
+        $this->getAuthUrl()
             ->shouldBeAValidUrl(
                 FILTER_FLAG_PATH_REQUIRED | FILTER_FLAG_QUERY_REQUIRED
             );

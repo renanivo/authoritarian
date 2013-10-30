@@ -93,7 +93,7 @@ class FeatureContext extends BehatContext
 
         $this->flow->setRedirectUri($this->parameters['redirect_url']);
 
-        $session->visit($this->flow->getAuthorizeUrl());
+        $session->visit($this->flow->getAuthUrl());
         $this->fillLoginFormAndSubmit($session->getPage());
 
         if ($this->wasAuthorizationButtonPrompted($session->getCurrentUrl())) {
@@ -136,7 +136,7 @@ class FeatureContext extends BehatContext
 
     private function wasAuthorizationButtonPrompted($currentUrl)
     {
-        return $currentUrl == $this->flow->getAuthorizeUrl();
+        return $currentUrl == $this->flow->getAuthUrl();
     }
 
     private function getAuthorizationCode($currentUrl)

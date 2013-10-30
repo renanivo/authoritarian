@@ -57,7 +57,7 @@ class AuthorizationCodeFlow extends AbstractFlow
      *
      * @return string The URL to user's authorization
      */
-    public function getAuthorizeUrl()
+    public function getAuthUrl()
     {
         return $this->authorizeUrl . '?' . $this->getAuthorizeQueryParameters();
     }
@@ -112,4 +112,3 @@ class AuthorizationCodeFlow extends AbstractFlow
         );
     }
 }
-
