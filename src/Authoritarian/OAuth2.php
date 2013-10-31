@@ -2,8 +2,6 @@
 
 namespace Authoritarian;
 
-use Guzzle\Http\ClientInterface;
-
 /**
  * Implementation of OAuthInterface to get the user's access token using OAuth2
  **/
@@ -14,12 +12,15 @@ class OAuth2 implements OAuth2Interface
 
     /**
      * @param string $token_url The URL to request the Access Token
-     * @param Guzzle\Http\ClientInterface $client The HTTP Client
      */
-    public function __construct($token_url, ClientInterface $client)
+    public function __construct($token_url)
+    {
+        $this->tokenUrl = $token_url;
+    }
+
+    public function setHttpClient(\Guzzle\Http\ClientInterface $client)
     {
         $this->client = $client;
-        $this->tokenUrl = $token_url;
     }
 
     /**
@@ -27,6 +28,10 @@ class OAuth2 implements OAuth2Interface
      */
     public function requestAccessToken(Flow\AbstractFlow $flow)
     {
+        if (is_null($this->client)) {
+            $this->client = new \Guzzle\Http\Client();
+        }
+
         $flow->setHttpClient($this->client);
         $flow->setTokenUrl($this->tokenUrl);
 

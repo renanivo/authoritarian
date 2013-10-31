@@ -14,14 +14,17 @@ use Authoritarian\Flow\ClientCredentialsFlow;
 class OAuth2Spec extends ObjectBehavior
 {
     public $responses;
+    public $client;
+    public $tokenUrl;
 
     public function let()
     {
-        $client = new Client();
+        $this->client = new Client();
         $this->responses = new MockPlugin();
-        $client->addSubscriber($this->responses);
+        $this->client->addSubscriber($this->responses);
+        $this->tokenUrl = 'http://example.com/oauth/token';
 
-        $this->beConstructedWith('http://example.com/oauth/token', $client);
+        $this->beConstructedWith($this->tokenUrl);
     }
 
     public function it_should_be_initializable()
@@ -37,11 +40,28 @@ class OAuth2Spec extends ObjectBehavior
             'response'
         );
         $this->responses->addResponse($response);
+        $this->setHttpClient($this->client);
+
+
         $flow = new ClientCredentialsFlow();
         $flow->setClientCredential('username', 'password');
 
         $this->requestAccessToken($flow)
             ->shouldHaveType('Guzzle\Http\Message\Response');
+    }
+
+    /**
+     * @param Authoritarian\Flow\ClientCredentialsFlow $flow
+     * @param Guzzle\Http\Message\Request $request
+     */
+    function it_should_request_access_token_when_client_was_not_set($flow, $request)
+    {
+        $flow->setHttpClient(Argument::type('Guzzle\Http\Client'))
+            ->shouldBeCalled();
+        $flow->setTokenUrl($this->tokenUrl)->shouldBeCalled();
+        $flow->getRequest()->willReturn($request);
+
+        $this->requestAccessToken($flow);
     }
 }
 
