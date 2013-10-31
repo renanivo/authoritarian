@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Authoritarian by renanivo</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Authoritarian</h1>
+        <h2>An OAuth 2 client for PHP with multiple authorization flows support</h2>
+        <a href="https://github.com/renanivo/authoritarian" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h2>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<p>Get <a href="http://getcomposer.org/">composer</a> and execute:</p>
+
+<div class="highlight highlight-bash"><pre>php composer.phar require renanivo/authoritarian
+</pre></div>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>You just need two steps to request the access token to your OAuth2 provider:</p>
+
+<h3>
+<a name="step-1---setup-your-flow" class="anchor" href="#step-1---setup-your-flow"><span class="octicon octicon-link"></span></a>Step 1 - Setup your flow</h3>
+
+<h4>
+<a name="client-credentials-flow" class="anchor" href="#client-credentials-flow"><span class="octicon octicon-link"></span></a>Client Credentials Flow</h4>
+
+<div class="highlight highlight-php"><pre><span class="k">use</span> <span class="nx">Authoritarian\Flow\ClientCredentialsFlow</span><span class="p">;</span>
+
+<span class="nv">$flow</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ClientCredentialsFlow</span><span class="p">();</span>
+<span class="nv">$flow</span><span class="o">-&gt;</span><span class="na">setClientCredential</span><span class="p">(</span><span class="s1">'client id'</span><span class="p">,</span> <span class="s1">'client secret'</span><span class="p">);</span>
+</pre></div>
+
+<h4>
+<a name="authorization-code-flow" class="anchor" href="#authorization-code-flow"><span class="octicon octicon-link"></span></a>Authorization-Code Flow</h4>
+
+<p>in the login page:</p>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">Authoritarian\Flow\AuthorizationCodeFlow</span><span class="p">;</span>
+
+<span class="nv">$flow</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AuthorizationCodeFlow</span><span class="p">(</span>
+    <span class="s1">'http://example.com/oauth/authorize'</span>
+<span class="p">);</span>
+
+<span class="nv">$flow</span><span class="o">-&gt;</span><span class="na">setClientCredential</span><span class="p">(</span><span class="s1">'client id'</span><span class="p">,</span> <span class="s1">'client secret'</span><span class="p">);</span>
+<span class="nv">$flow</span><span class="o">-&gt;</span><span class="na">setCallbackUri</span><span class="p">(</span><span class="s1">'http://example.com/callback'</span><span class="p">);</span>
+
+<span class="nx">header</span><span class="p">(</span><span class="s1">'Location: '</span> <span class="o">.</span> <span class="nv">$flow</span><span class="o">-&gt;</span><span class="na">getAuthUrl</span><span class="p">());</span>
+</pre></div>
+
+<p>in the callback page:</p>
+
+<div class="highlight highlight-php"><pre><span class="nv">$code</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'code'</span><span class="p">];</span>
+<span class="nv">$flow</span><span class="o">-&gt;</span><span class="na">setCode</span><span class="p">(</span><span class="nv">$code</span><span class="p">);</span>
+</pre></div>
+
+<h4>
+<a name="resource-owner-password" class="anchor" href="#resource-owner-password"><span class="octicon octicon-link"></span></a>Resource Owner Password</h4>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">Authoritarian\Flow\ResourceOwnerPasswordFlow</span><span class="p">;</span>
+
+<span class="nv">$flow</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ResourceOwnerPasswordFlow</span><span class="p">(</span>
+    <span class="s1">'username'</span><span class="p">,</span>
+    <span class="s1">'password'</span>
+<span class="p">);</span>
+
+<span class="nv">$flow</span><span class="o">-&gt;</span><span class="na">setClientCredential</span><span class="p">(</span><span class="nv">$credential</span><span class="p">);</span>
+<span class="nv">$flow</span><span class="o">-&gt;</span><span class="na">setScope</span><span class="p">(</span><span class="s1">'scope'</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="step-2---request-the-access-token" class="anchor" href="#step-2---request-the-access-token"><span class="octicon octicon-link"></span></a>Step 2 - Request the access token</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">Authoritarian\OAuth2</span><span class="p">;</span>
+
+<span class="nv">$oauth2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">OAuth2</span><span class="p">(</span><span class="s1">'http://example.com/oauth/token'</span><span class="p">);</span>
+<span class="nv">$token</span> <span class="o">=</span> <span class="nv">$oauth2</span><span class="o">-&gt;</span><span class="na">requestAccessToken</span><span class="p">(</span><span class="nv">$flow</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">json</span><span class="p">();</span>
+</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/renanivo/authoritarian/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/renanivo/authoritarian/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/renanivo/authoritarian"></a> is maintained by <a href="https://github.com/renanivo">renanivo</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
