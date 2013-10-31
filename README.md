@@ -1,7 +1,7 @@
 Authoritarian
 =============
 
-A PHP library for OAuth 2 with multiple flows support
+An OAuth 2 client for PHP with multiple authorization flows support
 
 Install
 -------
@@ -17,9 +17,9 @@ Usage
 
 You just need two steps to request the access token to your OAuth2 provider:
 
-## Step 1 - Setup your flow
+### Step 1 - Setup your flow
 
-### Client Credentials Flow
+#### Client Credentials Flow
 ```php
 use Authoritarian\Flow\ClientCredentialsFlow;
 
@@ -27,7 +27,7 @@ $flow = new ClientCredentialsFlow();
 $flow->setClientCredential('client id', 'client secret');
 ```
 
-### Authorization-Code Flow
+#### Authorization-Code Flow
 
 in the login page:
 
@@ -53,7 +53,7 @@ $code = $_GET['code'];
 $flow->setCode($code);
 ```
 
-### Resource Owner Password
+#### Resource Owner Password
 ```php
 <?php
 
@@ -68,13 +68,12 @@ $flow->setClientCredential($credential);
 $flow->setScope('scope');
 ```
 
-## Step 2 - Request the access token
+### Step 2 - Request the access token
 ```php
 <?php
 
 use Authoritarian\OAuth2;
 
 $oauth2 = new OAuth2('http://example.com/oauth/token');
-
 $token = $oauth2->requestAccessToken($flow)->json();
 ```
