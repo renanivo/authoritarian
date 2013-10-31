@@ -21,8 +21,7 @@ class OAuth2Spec extends ObjectBehavior
         $this->responses = new MockPlugin();
         $client->addSubscriber($this->responses);
 
-        $this->beConstructedWith($client);
-        $this->setTokenUrl('http://example.com/oauth/token');
+        $this->beConstructedWith('http://example.com/oauth/token', $client);
     }
 
     public function it_should_be_initializable()
