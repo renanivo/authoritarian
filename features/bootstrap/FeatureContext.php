@@ -52,9 +52,7 @@ class FeatureContext extends BehatContext
      */
     public function iRequestTheAccessToken()
     {
-        $client = new Guzzle\Http\Client();
-        $oauth2 = new Authoritarian\OAuth2($client);
-        $oauth2->setTokenUrl($this->parameters['token_url']);
+        $oauth2 = new Authoritarian\OAuth2($this->parameters['token_url']);
         $this->accessToken = $oauth2->requestAccessToken($this->flow);
     }
 
