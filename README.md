@@ -74,8 +74,7 @@ $flow->setScope('scope');
 
 use Authoritarian\OAuth2;
 
-$oauth2 = new OAuth2();
-$oauth2->setToken('http://example.com/oauth/token');
+$oauth2 = new OAuth2('http://example.com/oauth/token');
 
 $token = $oauth2->requestAccessToken($flow)->json();
 ```
