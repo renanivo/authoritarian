@@ -18,7 +18,7 @@ abstract class AbstractFlow
     protected $scope;
 
     /**
-     * @param Guzzle\Http\ClientInterface $client The HTTP Client
+     * @param \Guzzle\Http\ClientInterface $client
      */
     public function setHttpClient(\Guzzle\Http\ClientInterface $client)
     {
@@ -54,7 +54,9 @@ abstract class AbstractFlow
     /**
      * Get the request to the Access Token
      *
-     * @throws Authoritarian\Exception\Flow\MissingTokenUrlException When the OAuth token URL wasn't set
+     * @throws MissingTokenUrlException When the OAuth token URL wasn't set
+     * @throws MissingClientCredentialException When the app's client
+     * credentials wasn't set
      *
      * @return \Guzzle\Http\Message\RequestInterface
      */

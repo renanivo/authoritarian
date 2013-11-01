@@ -9,6 +9,9 @@ class ClientCredentialsFlow extends AbstractFlow
 {
     const GRANT_TYPE = 'client_credentials';
 
+    /**
+     * {@inheritDoc}
+     */
     public function getRequest()
     {
         parent::getRequest();

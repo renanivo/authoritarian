@@ -6,8 +6,7 @@ use Authoritarian\Credential\ClientCredential;
 use Authoritarian\Exception\Flow\MissingTokenUrlException;
 
 /**
- * Implementation of the Authorization Flow Interface to
- * the Resource Owner Password Flow of OAuth 2
+ * Implementation of Resource Owner Password Flow
  **/
 class ResourceOwnerPasswordFlow extends AbstractFlow
 {
@@ -17,8 +16,8 @@ class ResourceOwnerPasswordFlow extends AbstractFlow
     protected $password;
 
     /**
-     * @param string $username The user's username to login
-     * @param string $password The user's password
+     * @param string $username
+     * @param string $password
      */
     public function __construct($username, $password)
     {
@@ -27,9 +26,7 @@ class ResourceOwnerPasswordFlow extends AbstractFlow
     }
 
     /**
-     * Get the authorization request
-     *
-     * @return Guzzle\Http\Message\Request
+     * {@inheritDoc}
      */
     public function getRequest()
     {

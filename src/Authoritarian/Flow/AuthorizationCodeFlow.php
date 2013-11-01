@@ -6,8 +6,7 @@ use Authoritarian\Exception\Flow\MissingAuthorizationCodeException;
 use Authoritarian\Credential\ClientCredential;
 
 /**
- * Implementation of the Authorization Flow Interface to
- * the Authorization Code Flow of Oauth 2
+ * Implementation of Authorization Code Flow
  **/
 class AuthorizationCodeFlow extends AbstractFlow
 {
@@ -29,7 +28,7 @@ class AuthorizationCodeFlow extends AbstractFlow
     }
 
     /**
-     * @param string $code The Authorization Code
+     * @param string $code The authorization code retrieved in the callback page
      */
     public function setCode($code)
     {
@@ -37,15 +36,15 @@ class AuthorizationCodeFlow extends AbstractFlow
     }
 
     /**
-     * @param string $url the callback URI to retrieve the authorization code
+     * @param string $uri the callback URI to retrieve the authorization code
      */
-    public function setRedirectUri($url)
+    public function setRedirectUri($uri)
     {
-        $this->redirectUri = $url;
+        $this->redirectUri = $uri;
     }
 
     /**
-     * @param string $state the CSRF token to validate the response code
+     * @param string $state The app's state to be resumed at the callback
      */
     public function setState($state)
     {
@@ -53,9 +52,9 @@ class AuthorizationCodeFlow extends AbstractFlow
     }
 
     /**
-     * Get the URL to user's authorization
+     * Get the URL to user's authentication and authorization
      *
-     * @return string The URL to user's authorization
+     * @return string
      */
     public function getAuthUrl()
     {
@@ -64,7 +63,8 @@ class AuthorizationCodeFlow extends AbstractFlow
 
     /**
      * {@inheritDoc}
-     * @throws Authoritarian\Exception\Flow\MissingAuthorizationCodeException When the authorization code wasn't set
+     * @throws MissingAuthorizationCodeException When the authorization code
+     * wasn't set
      */
     public function getRequest()
     {
