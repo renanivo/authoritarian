@@ -2,7 +2,7 @@
     "name": "renanivo/authoritarian",
     "description": "An OAuth 2 client for PHP with multiple authorization flows support",
     "require": {
-        "guzzle/guzzle": "~3.5.0"
+        "guzzle/guzzle": "~3.5"
     },
     "require-dev": {
         "phpspec/phpspec": "2.0.*@dev",
