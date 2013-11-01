@@ -4,16 +4,16 @@ namespace Authoritarian;
 
 
 /**
- * OAuth 2 interface to obtain the user's Access Token
+ * Interface for request user authorizations via access tokens
  */
-interface OAuth2Interface
+interface AuthorizationInterface
 {
     /**
      * Requests the token endpoint and get the user's Access Token
      *
-     * @param \Authoritarian\Flow\AbstractFlow $flow  The Oauth2 flow
+     * @param Flow\AbstractFlow $flow  The Oauth2 flow
      *
-     * @return array
+     * @return \Guzzle\Http\Message\Response
      */
     public function requestAccessToken(Flow\AbstractFlow $flow);
 }
