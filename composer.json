@@ -9,7 +9,8 @@
         "behat/behat": "2.4.*@stable",
         "behat/mink-extension": "*",
         "behat/mink-selenium2-driver": "*",
-        "henrikbjorn/phpspec-code-coverage": "dev-master"
+        "henrikbjorn/phpspec-code-coverage": "dev-master",
+        "apigen/apigen": "*"
     },
     "config": {
         "bin-dir": "bin"
