@@ -1,0 +1,3 @@
+tools:
+    php_code_coverage: true
+        test_command: ./bin/phpspec
