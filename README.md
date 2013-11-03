@@ -1,5 +1,6 @@
 Authoritarian
 =============
+[![Build Status](https://travis-ci.org/renanivo/authoritarian.png?branch=master)](https://travis-ci.org/renanivo/authoritarian)
 
 An OAuth 2 client for PHP with multiple authorization flows support
 
