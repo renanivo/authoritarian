@@ -1,7 +1,8 @@
-/vendor/
+.DS_Store
+/behat.yml
 /bin/
 /coverage/
-/behat.yml
 /phpspec.yml
-.DS_Store
+/vendor/
+composer.lock
 coverage
