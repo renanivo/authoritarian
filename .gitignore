@@ -4,3 +4,4 @@
 /behat.yml
 /phpspec.yml
 .DS_Store
+coverage
