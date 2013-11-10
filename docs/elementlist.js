@@ -1,3 +1,0 @@
-
-var ApiGen = ApiGen || {};
-ApiGen.elements = [["c","Authoritarian\\AuthorizationInterface"],["c","Authoritarian\\Exception\\Flow\\MissingAuthorizationCodeException"],["c","Authoritarian\\Exception\\Flow\\MissingClientCredentialException"],["c","Authoritarian\\Exception\\Flow\\MissingTokenUrlException"],["c","Authoritarian\\Exception\\FlowException"],["c","Authoritarian\\Flow\\AbstractFlow"],["c","Authoritarian\\Flow\\AuthorizationCodeFlow"],["c","Authoritarian\\Flow\\ClientCredentialsFlow"],["c","Authoritarian\\Flow\\ResourceOwnerPasswordFlow"],["c","Authoritarian\\OAuth2"],["c","Exception"]];
