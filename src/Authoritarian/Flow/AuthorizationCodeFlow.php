@@ -13,18 +13,26 @@ class AuthorizationCodeFlow extends AbstractFlow
     const GRANT_TYPE = 'authorization_code';
     const RESPONSE_TYPE = 'code';
 
-    protected $authorizeUrl;
+    protected $authorizationUrl;
     protected $code;
     protected $redirectUri;
     protected $state;
     protected $parameters;
 
     /**
-     * @param string $authorize_url The OAuth Authorize endpoint url
+     * @param string $authorization_url OAuth 2's Authorization endpoint url
      */
-    public function __construct($authorize_url)
+    public function __construct($authorization_url = null)
     {
-        $this->authorizeUrl = $authorize_url;
+        $this->setAuthorizationUrl($authorization_url);
+    }
+
+    /**
+     * @param string $authorization_url OAuth 2's Authorization endpoint url
+     */
+    public function setAuthorizationUrl($authorization_url)
+    {
+        $this->authorizationUrl = $authorization_url;
     }
 
     /**
@@ -58,7 +66,7 @@ class AuthorizationCodeFlow extends AbstractFlow
      */
     public function getAuthUrl()
     {
-        return $this->authorizeUrl . '?' . $this->getAuthorizeQueryParameters();
+        return $this->authorizationUrl . '?' . $this->getAuthorizeQueryParameters();
     }
 
     /**
