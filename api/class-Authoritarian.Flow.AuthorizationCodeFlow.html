@@ -6,7 +6,7 @@
 
 	<title>Class Authoritarian\Flow\AuthorizationCodeFlow</title>
 
-	<script type="text/javascript" src="resources/combined.js?152080232"></script>
+	<script type="text/javascript" src="resources/combined.js?1187232920"></script>
 	<script type="text/javascript" src="elementlist.js?2911572033"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
 
@@ -125,7 +125,7 @@
 		<b>Namespace:</b> <a href="namespace-Authoritarian.html">Authoritarian</a>\<a href="namespace-Authoritarian.Flow.html">Flow</a><br />
 		
 
-		<b>Located at</b> <a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#8-114" title="Go to source code">Authoritarian/Flow/AuthorizationCodeFlow.php</a><br />
+		<b>Located at</b> <a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#8-122" title="Go to source code">Authoritarian/Flow/AuthorizationCodeFlow.php</a><br />
 	</div>
 
 
@@ -143,7 +143,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#22-28" title="Go to source code">__construct</a>( <span>string <var>$authorize_url</var></span> )</code>
+		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#22-28" title="Go to source code">__construct</a>( <span>string <var>$authorization_url</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			
@@ -155,8 +155,42 @@
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$authorize_url</var></dt>
-					<dd><code>string</code><br>$authorize_url The OAuth Authorize endpoint url</dd>
+					<dt><var>$authorization_url</var></dt>
+					<dd><code>string</code><br>$authorization_url OAuth 2's Authorization endpoint url</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setAuthorizationUrl" id="_setAuthorizationUrl">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setAuthorizationUrl">#</a>
+		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#30-36" title="Go to source code">setAuthorizationUrl</a>( <span>string <var>$authorization_url</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$authorization_url</var></dt>
+					<dd><code>string</code><br>$authorization_url OAuth 2's Authorization endpoint url</dd>
 				</dl></div>
 
 
@@ -177,7 +211,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setCode">#</a>
-		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#30-36" title="Go to source code">setCode</a>( <span>string <var>$code</var></span> )</code>
+		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#38-44" title="Go to source code">setCode</a>( <span>string <var>$code</var></span> )</code>
 
 		<div class="description short">
 			
@@ -211,7 +245,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setRedirectUri">#</a>
-		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#38-44" title="Go to source code">setRedirectUri</a>( <span>string <var>$uri</var></span> )</code>
+		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#46-52" title="Go to source code">setRedirectUri</a>( <span>string <var>$uri</var></span> )</code>
 
 		<div class="description short">
 			
@@ -245,7 +279,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setState">#</a>
-		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#46-52" title="Go to source code">setState</a>( <span>string <var>$state</var></span> )</code>
+		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#54-60" title="Go to source code">setState</a>( <span>string <var>$state</var></span> )</code>
 
 		<div class="description short">
 			
@@ -279,7 +313,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getAuthUrl">#</a>
-		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#54-62" title="Go to source code">getAuthUrl</a>( )</code>
+		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#62-70" title="Go to source code">getAuthUrl</a>( )</code>
 
 		<div class="description short">
 			
@@ -316,7 +350,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRequest">#</a>
-		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#64-84" title="Go to source code">getRequest</a>( )</code>
+		<code><a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#72-92" title="Go to source code">getRequest</a>( )</code>
 
 		<div class="description short">
 			
@@ -418,18 +452,18 @@
 
 	<table class="summary" id="properties">
 	<caption>Properties summary</caption>
-	<tr data-order="authorizeUrl" id="$authorizeUrl">
+	<tr data-order="authorizationUrl" id="$authorizationUrl">
 		<td class="attributes"><code>
 			protected  
 			mixed
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#16" title="Go to source code"><var>$authorizeUrl</var></a>
+				<a href="source-class-Authoritarian.Flow.AuthorizationCodeFlow.html#16" title="Go to source code"><var>$authorizationUrl</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
-			<a href="#$authorizeUrl" class="anchor">#</a>
+			<a href="#$authorizationUrl" class="anchor">#</a>
 
 			<div class="description short">
 				
