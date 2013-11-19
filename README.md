@@ -42,9 +42,8 @@ in the login page:
 use Authoritarian\OAuth2;
 use Authoritarian\Flow\AuthorizationCodeFlow;
 
-$flow = new AuthorizationCodeFlow(
-    'http://example.com/oauth/authorize'
-);
+$flow = new AuthorizationCodeFlow();
+$flow->setAuthorizationUrl('http://example.com/oauth/authorize');
 $flow->setClientCredential('client id', 'client secret');
 $flow->setCallbackUri('http://example.com/callback');
 
@@ -58,9 +57,7 @@ in the callback page:
 use Authoritarian\OAuth2;
 use Authoritarian\Flow\AuthorizationCodeFlow;
 
-$flow = new AuthorizationCodeFlow(
-    'http://example.com/oauth/authorize'
-);
+$flow = new AuthorizationCodeFlow();
 $flow->setClientCredential('client id', 'client secret');
 $flow->setCode($_GET['code']);
 
