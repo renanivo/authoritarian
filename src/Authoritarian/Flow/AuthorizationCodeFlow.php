@@ -3,7 +3,6 @@
 namespace Authoritarian\Flow;
 
 use Authoritarian\Exception\Flow\MissingAuthorizationCodeException;
-use Authoritarian\Credential\ClientCredential;
 
 /**
  * Implementation of Authorization Code Flow

@@ -42,7 +42,6 @@ class OAuth2Spec extends ObjectBehavior
         $this->responses->addResponse($response);
         $this->setHttpClient($this->client);
 
-
         $flow = new ClientCredentialsFlow();
         $flow->setClientCredential('username', 'password');
 
@@ -52,9 +51,9 @@ class OAuth2Spec extends ObjectBehavior
 
     /**
      * @param Authoritarian\Flow\ClientCredentialsFlow $flow
-     * @param Guzzle\Http\Message\Request $request
+     * @param Guzzle\Http\Message\Request              $request
      */
-    function it_should_request_access_token_when_client_was_not_set($flow, $request)
+    public function it_should_request_access_token_when_client_was_not_set($flow, $request)
     {
         $flow->setHttpClient(Argument::type('Guzzle\Http\Client'))
             ->shouldBeCalled();
@@ -64,4 +63,3 @@ class OAuth2Spec extends ObjectBehavior
         $this->requestAccessToken($flow);
     }
 }
-
