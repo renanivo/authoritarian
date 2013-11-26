@@ -3,10 +3,8 @@
 namespace spec\Authoritarian\Flow;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 use Authoritarian\Flow\ResourceOwnerPasswordFlow;
-use Authoritarian\Credential\ClientCredential;
 
 class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
 {
@@ -131,4 +129,3 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
         );
     }
 }
-

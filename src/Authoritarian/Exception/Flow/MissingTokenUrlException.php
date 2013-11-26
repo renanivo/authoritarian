@@ -10,4 +10,3 @@ use Authoritarian\Exception\FlowException;
 class MissingTokenUrlException extends FlowException
 {
 }
-

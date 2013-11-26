@@ -38,4 +38,3 @@ class OAuth2 implements AuthorizationInterface
         return $flow->getRequest()->send();
     }
 }
-

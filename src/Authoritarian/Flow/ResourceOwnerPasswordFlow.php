@@ -2,9 +2,6 @@
 
 namespace Authoritarian\Flow;
 
-use Authoritarian\Credential\ClientCredential;
-use Authoritarian\Exception\Flow\MissingTokenUrlException;
-
 /**
  * Implementation of Resource Owner Password Flow
  **/
@@ -55,4 +52,3 @@ class ResourceOwnerPasswordFlow extends AbstractFlow
         );
     }
 }
-

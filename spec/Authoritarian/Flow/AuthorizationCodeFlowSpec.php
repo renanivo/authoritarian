@@ -3,9 +3,7 @@
 namespace spec\Authoritarian\Flow;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
-use Authoritarian\Credential\ClientCredential;
 use Authoritarian\Flow\AuthorizationCodeFlow;
 
 class AuthorizationCodeFlowSpec extends ObjectBehavior
@@ -205,4 +203,3 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
         );
     }
 }
-

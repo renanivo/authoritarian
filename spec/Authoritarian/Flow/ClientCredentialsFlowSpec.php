@@ -3,7 +3,6 @@
 namespace spec\Authoritarian\Flow;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class ClientCredentialsFlowSpec extends ObjectBehavior
 {

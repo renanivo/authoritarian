@@ -2,7 +2,6 @@
 
 namespace Authoritarian\Flow;
 
-use Authoritarian\Credential\ClientCredential;
 use Authoritarian\Exception\Flow\MissingTokenUrlException;
 use Authoritarian\Exception\Flow\MissingClientCredentialException;
 
@@ -54,13 +53,14 @@ abstract class AbstractFlow
     /**
      * Get the request to the Access Token
      *
-     * @throws MissingTokenUrlException When the OAuth token URL wasn't set
+     * @throws MissingTokenUrlException         When the OAuth token URL wasn't set
      * @throws MissingClientCredentialException When the app's client
      * credentials wasn't set
      *
      * @return \Guzzle\Http\Message\RequestInterface
      */
-    public function getRequest() {
+    public function getRequest()
+    {
         if (is_null($this->tokenUrl)) {
             throw new MissingTokenUrlException(
                 'No OAuth token URL given to generate a request'
@@ -84,4 +84,3 @@ abstract class AbstractFlow
         );
     }
 }
-
