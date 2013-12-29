@@ -9,9 +9,15 @@
         "behat/behat": "2.4.*@stable",
         "behat/mink-extension": "*",
         "behat/mink-selenium2-driver": "*",
-        "henrikbjorn/phpspec-code-coverage": "dev-master",
+        "henrikbjorn/phpspec-code-coverage": "1.0.*@dev"
         "apigen/apigen": "*"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:renanivo/PhpSpecCodeCoverageExtension.git"
+        }
+    ],
     "config": {
         "bin-dir": "bin"
     },
