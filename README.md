@@ -45,7 +45,7 @@ use Authoritarian\Flow\AuthorizationCodeFlow;
 $flow = new AuthorizationCodeFlow();
 $flow->setAuthorizationUrl('http://example.com/oauth/authorize');
 $flow->setClientCredential('client id', 'client secret');
-$flow->setCallbackUri('http://example.com/callback');
+$flow->setRedirectUri('http://example.com/callback');
 
 header('Location: ' . $flow->getAuthUrl());
 ```
