@@ -55,7 +55,7 @@ abstract class AbstractFlow
      *
      * @throws MissingTokenUrlException         When the OAuth token URL wasn't set
      * @throws MissingClientCredentialException When the app's client
-     * credentials wasn't set
+     *                                          credentials wasn't set
      *
      * @return \Guzzle\Http\Message\RequestInterface
      */

@@ -5,10 +5,8 @@ namespace spec\Authoritarian;
 use Guzzle\Http\Client;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
-
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-
 use Authoritarian\Flow\ClientCredentialsFlow;
 
 class OAuth2Spec extends ObjectBehavior

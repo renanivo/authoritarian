@@ -3,7 +3,6 @@
 namespace spec\Authoritarian\Flow;
 
 use PhpSpec\ObjectBehavior;
-
 use Authoritarian\Flow\AuthorizationCodeFlow;
 
 class AuthorizationCodeFlowSpec extends ObjectBehavior
@@ -199,7 +198,7 @@ class AuthorizationCodeFlowSpec extends ObjectBehavior
 
                 return array_key_exists($key, $parameters) &&
                     $parameters[$key] == $value;
-            }
+            },
         );
     }
 }

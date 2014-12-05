@@ -1,14 +1,7 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface;
-use Behat\Behat\Context\TranslatedContextInterface;
 use Behat\Behat\Context\BehatContext;
-use Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-
 use Behat\Mink\Driver\Selenium2Driver;
-
 use Authoritarian\Flow\ResourceOwnerPasswordFlow;
 use Authoritarian\Flow\AuthorizationCodeFlow;
 
@@ -142,7 +135,7 @@ class FeatureContext extends BehatContext
         $querystring = explode('?', $currentUrl)[1];
         $parameters = array();
         parse_str($querystring, $parameters);
+
         return $parameters['code'];
     }
 }
-

@@ -65,13 +65,13 @@ class AuthorizationCodeFlow extends AbstractFlow
      */
     public function getAuthUrl()
     {
-        return $this->authorizationUrl . '?' . $this->getAuthorizeQueryParameters();
+        return $this->authorizationUrl.'?'.$this->getAuthorizeQueryParameters();
     }
 
     /**
      * {@inheritDoc}
      * @throws MissingAuthorizationCodeException When the authorization code
-     * wasn't set
+     *                                           wasn't set
      */
     public function getRequest()
     {

@@ -3,7 +3,6 @@
 namespace spec\Authoritarian\Flow;
 
 use PhpSpec\ObjectBehavior;
-
 use Authoritarian\Flow\ResourceOwnerPasswordFlow;
 
 class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
@@ -125,7 +124,7 @@ class ResourceOwnerPasswordFlowSpec extends ObjectBehavior
 
                 return array_key_exists($key, $parameters) &&
                     $parameters[$key] == $value;
-            }
+            },
         );
     }
 }

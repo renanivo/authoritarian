@@ -72,7 +72,7 @@ class ClientCredentialsFlowSpec extends ObjectBehavior
 
                 return array_key_exists($key, $parameters) &&
                     $parameters[$key] == $value;
-            }
+            },
         );
     }
 }
