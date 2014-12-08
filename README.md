@@ -80,3 +80,18 @@ $flow->setClientCredential('client id', 'client secret');
 $oauth2 = new OAuth2('http://example.com/oauth/token');
 $token = $oauth2->requestAccessToken($flow)->json();
 ```
+
+Generate Docs
+-------------
+
+- Download apigen.phar:
+
+    ```bash
+    curl -sS http://apigen.org/installer | php
+    ```
+
+- Run ApiGen:
+
+    ```bash
+    php apigen.phar generate
+    ```

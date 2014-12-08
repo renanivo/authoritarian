@@ -2,7 +2,9 @@
 /behat.yml
 /bin/
 /coverage/
+/docs/
 /phpspec.yml
 /vendor/
+apigen.phar
 composer.lock
 coverage

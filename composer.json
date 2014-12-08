@@ -10,7 +10,6 @@
         "behat/mink-extension": "*",
         "behat/mink-selenium2-driver": "*",
         "henrikbjorn/phpspec-code-coverage": "1.0.*@dev",
-        "apigen/apigen": "*"
     },
     "repositories": [
         {
