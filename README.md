@@ -1,8 +1,8 @@
 Authoritarian
 =============
 [![Build Status](https://travis-ci.org/renanivo/authoritarian.png?branch=master)](https://travis-ci.org/renanivo/authoritarian)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/renanivo/authoritarian/badges/quality-score.png?s=63b8e247fadff1a31f463332f7c3aa8f5a08a9da)](https://scrutinizer-ci.com/g/renanivo/authoritarian/)
-[![Code Coverage](https://scrutinizer-ci.com/g/renanivo/authoritarian/badges/coverage.png?s=49435dc730c693973c7cce2790a09a9a774ba76f)](https://scrutinizer-ci.com/g/renanivo/authoritarian/)
+[![Code Climate](https://codeclimate.com/github/renanivo/authoritarian.png)](https://codeclimate.com/github/renanivo/authoritarian)
+[![Test Coverage](https://codeclimate.com/github/renanivo/authoritarian/badges/coverage.svg)](https://codeclimate.com/github/renanivo/authoritarian)
 
 An OAuth 2 client for PHP with multiple authorization flows support
 

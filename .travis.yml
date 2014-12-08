@@ -1,10 +1,10 @@
 language: php
 php:
+  - 5.6
   - 5.5
   - 5.4
 before_script:
     - composer install --dev
 after_script:
-    - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --format=php-clover coverage
+    - CODECLIMATE_REPO_TOKEN=509c9666f17f278662ba601eb9ac632d6288f3701780d2370262a646d06a0849 ./bin/test-reporter --coverage-report=coverage.xml
 script: ./bin/phpspec run --format pretty
