@@ -10,5 +10,6 @@ addons:
 before_script:
     - composer install --dev
 after_script:
-    - ./bin/test-reporter --coverage-report=coverage.xml
+    - ./bin/test-reporter --coverage-report=coverage.xml --stdout > codeclimate.json
+    - curl -X POST -d @codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports
 script: ./bin/phpspec run --format pretty
