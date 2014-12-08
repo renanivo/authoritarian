@@ -3,8 +3,12 @@ php:
   - 5.6
   - 5.5
   - 5.4
+addons:
+    code_climate:
+        repo_token:
+            secure: "bj1z2212HzE63deD+C1dYhCiSQoPxBS2CH8MdZirNFciD1Sy4tzJwDALSQ6f7ggSR6TThSPnBHVniZ9Haf9iWPRxXoPkbhKsDZtr3k8D+MuHnFBk+OhOJ3xTqJmhQy+3A9x1mHaJxz58HXuxLQMxMFNeVoTUDxA9NGfAcoZ9/vI="
 before_script:
     - composer install --dev
 after_script:
-    - CODECLIMATE_REPO_TOKEN=509c9666f17f278662ba601eb9ac632d6288f3701780d2370262a646d06a0849 ./bin/test-reporter --coverage-report=coverage.xml
+    - ./bin/test-reporter --coverage-report=coverage.xml
 script: ./bin/phpspec run --format pretty
